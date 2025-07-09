@@ -42,7 +42,7 @@ BSB_mega_folder/
 │   ├── R_code/
 │   ├── stata_code/
 │   ├── more stuff/
-├── READ-SSB-Lee-BlackSeaBass/  #Prices in stock assessment
+├── READ-SSB-Lee-BlackSeaBass/  #Prices in stock assessment Repository
 │   ├── READ-SSB-Lee-BlackSeaBass.Rproj
 │   ├── data_folder
 │   	├── data_raw/              # Raw data (minimal)
@@ -51,7 +51,7 @@ BSB_mega_folder/
 │   ├── R_code/
 │   ├── stata_code/
 │   └── README.md
-├── PortChoice/  #Port Choice Project
+├── PortChoice/                  #Port Choice  Repository
 │   ├── PortChoice.Rproj  
 │   ├── data_folder
 │   	├── data_raw/              # Raw data (minimal)
@@ -86,7 +86,7 @@ This repository is a scientific product and is not official communication of the
 
 
 1. who worked on this project:  Min-Yang Lee
-1. when this project was created: Summer 2025 
+1. when this project was created: Summer 2024 
 1. what the project does: Black Sea bass related projects
 1. why the project is useful:  Black Sea bass is awesome
 1. how users can get started with the project: Download and follow the readme
