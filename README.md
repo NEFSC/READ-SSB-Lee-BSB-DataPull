@@ -31,6 +31,40 @@ where they land their catch?  This may be 2 or 3 projects.
 Folder structure is mostly borrowed from the world bank's EDB. https://dimewiki.worldbank.org/wiki/Stata_Coding_Practices
 Try to use forward slashes (that is C:/path/to/your/folder) instead of backslashes for unix/mac compatability. 
 
+Your life will be easier if you organize things into a BSB_mega_folder because there are a few linked projects.
+```
+BSB_mega_folder/
+├── READ-SSB-Lee-BSB-DataPull/  #Data pull, explore, background. 
+│   ├── data_folder/              # Shared data
+│ 	  ├── data_raw/	   
+│ 	  ├── data_external/
+│ 	  └── data_main/
+│   ├── R_code/
+│   ├── stata_code/
+│   ├── more stuff/
+├── READ-SSB-Lee-BlackSeaBass/  #Prices in stock assessment
+│   ├── READ-SSB-Lee-BlackSeaBass.Rproj
+│   ├── data_folder
+│   	├── data_raw/              # Raw data (minimal)
+│ 	  ├── data_main/             # Final Data specific to this project
+│   ├── results/
+│   ├── R_code/
+│   ├── stata_code/
+│   └── README.md
+├── PortChoice/  #Port Choice Project
+│   ├── PortChoice.Rproj  
+│   ├── data_folder
+│   	├── data_raw/              # Raw data (minimal)
+│ 	  ├── data_main/             # Final Data specific to this project
+│   ├── results/
+│   ├── R_code/
+│   ├── stata_code/
+│   └── README.md
+
+```
+
+
+
 I keep each project in a separate folder.  A stata do file containing folder names get stored as a macro in stata's startup profile.do.  This lets me start working on any of my projects by opening stata and typing: 
 ```
 do $my_project_name
@@ -52,7 +86,7 @@ This repository is a scientific product and is not official communication of the
 
 
 1. who worked on this project:  Min-Yang Lee
-1. when this project was created: Summer 2024 
+1. when this project was created: Summer 2025 
 1. what the project does: Black Sea bass related projects
 1. why the project is useful:  Black Sea bass is awesome
 1. how users can get started with the project: Download and follow the readme
