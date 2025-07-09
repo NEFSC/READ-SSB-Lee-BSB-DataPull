@@ -5,11 +5,9 @@ version 15.1
 #delimit ;
 
 
-/*One of these
-global user minyangWin; 
-*/
 
-global my_projdir  "${mynetwork}\PricesInStockAssessment\READ-SSB-Lee-BSB-DataPull;
+
+global my_projdir  "${mynetwork}\PricesInStockAssessment\READ-SSB-Lee-BSB-DataPull";
 
 
 
