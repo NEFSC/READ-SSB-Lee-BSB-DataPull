@@ -1,6 +1,6 @@
-global vintage_string 2024_12_20
+global vintage_string 2025_07_09
 
-use "${data_main}\commercial\daily_landings_category_${vintage_string}.dta", replace
+use "${data_raw}\commercial\daily_landings_category_${vintage_string}.dta", replace
 keep if _merge==3
 /* make line and box plots of prices and volumes by grade and market code */
 

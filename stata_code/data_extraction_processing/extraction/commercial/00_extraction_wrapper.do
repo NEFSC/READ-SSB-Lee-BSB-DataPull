@@ -22,3 +22,5 @@ do "$extraction_code/commercial/bsb_veslog.do"
 do "$extraction_code/extract_data_from_FRED.do"
 
 do "$extraction_code/permit_characteristics_extractions.do"
+
+do "$extraction_code/commercial/bsb_dersource_investigations.do"

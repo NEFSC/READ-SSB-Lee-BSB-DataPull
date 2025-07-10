@@ -6,9 +6,9 @@ version 15.1
 
 
 
-
-global my_projdir  "${mynetwork}\PricesInStockAssessment\READ-SSB-Lee-BSB-DataPull";
-
+global my_megadir  "${mynetwork}/PricesInStockAssessment" ;
+global my_Pricedir  "${my_megadir}/READ-SSB-Lee-BlackSeaBass" ;
+global my_projdir  "${my_megadir}/READ-SSB-Lee-BSB-DataPull" ;
 
 
 global my_codedir "${my_projdir}\stata_code";

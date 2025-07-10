@@ -3,7 +3,7 @@
 */
 
 graph drop _all
-global in_string 2024_12_20
+global in_string 2025_07_09
 use "${data_raw}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)

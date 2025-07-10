@@ -1,7 +1,7 @@
 /* code to estimate more complex  classification models */
 /*before you can run this, you must run the data extraction and commercial data processing wrappers
 */
-global in_string 2024_12_20
+global in_string 2025_07_09
 use  "${data_main}\commercial\landings_cleaned_${in_string}.dta", replace
 
 /**********************************************************************************************************************/
