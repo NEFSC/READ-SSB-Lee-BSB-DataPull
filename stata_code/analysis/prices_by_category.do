@@ -1,3 +1,5 @@
+/* code to explore prices by market category*/
+
 global vintage_string 2025_07_09
 
 use "${data_raw}\commercial\daily_landings_category_${vintage_string}.dta", replace
