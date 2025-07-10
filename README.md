@@ -5,6 +5,24 @@ This repository holds data extraction, processing, and exploration code for Min-
 It includes a datapull from CAMS and other sources, data exploration, and 
 moderate amounts of data processing that is (hopefully) general to all projects. 
 
+Code to extract data from NEFSC Oracle databases will need to be run by a user with access.  This code can be found in 
+```
+├── READ-SSB-Lee-BSB-DataPull/  
+│   ├── R_code/            
+│ 	  ├── data_extraction_processing
+│ 	  	├── extraction
+│   ├── stata_code/            
+│ 	  ├── data_extraction_processing
+│ 	  	├── extraction
+```
+
+All results of the data extraction code will be put into
+
+```
+├── READ-SSB-Lee-BSB-DataPull/  
+│   ├── data_folder/            
+│ 	  ├── raw
+```
 This code supports
 
 1. "Economic-informed stock assessments": Because the 
