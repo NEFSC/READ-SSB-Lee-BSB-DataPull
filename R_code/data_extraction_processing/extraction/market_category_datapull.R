@@ -58,4 +58,4 @@ market_cats2<-market_cats %>%
 landings<-landings %>%
   left_join(market_cats2, by=join_by(itis_tsn==itis_tsn, dlr_mkt==market_code))
 
-write_rds(landings, file=here("data_folder","main",glue("all_marketcategory_landings_{vintage_string}.Rds")))
+write_rds(landings, file=here("data_folder","raw","commercial",glue("all_marketcategory_landings_{vintage_string}.Rds")))
