@@ -37,13 +37,21 @@ fmp_listing<-dbGetQuery(nova_conn, fmp_query)
 
 dbDisconnect(nova_conn)
 
-# Fix council, rename to lower
+
+
 
 # rename to lower
 landings <- landings %>%
   rename_with(tolower)
 grade_cats <- grade_cats %>%
-  rename_with(tolower)
+  rename_with(tolower)%>%
+  group_by(itis_tsn, grade_code) %>%
+  slice(1)
+
+
+write_rds(grade_cats, file=here("data_folder","raw","commercial",glue("grade_cats_{vintage_string}.Rds")))
+
+
 market_cats <- market_cats %>%
   rename_with(tolower)
 
@@ -51,6 +59,8 @@ market_cats <- market_cats %>%
 market_cats2<-market_cats %>%
   group_by(itis_tsn, market_code) %>%
   slice(1)
+
+write_rds(market_cats2, file=here("data_folder","raw","commercial",glue("market_cats_{vintage_string}.Rds")))
 
 
 
