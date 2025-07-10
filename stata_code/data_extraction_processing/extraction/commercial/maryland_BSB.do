@@ -13,7 +13,8 @@ aggregates the rest to the permit-year level.
 #delimit ;
 /* Pull data from CAMS, group by permit, year and species */
 clear;
-jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
+
+*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
 
 
 local sql "select permit, hullid, year, sum(landings) as landings, sum(value) as value from ( 
@@ -25,7 +26,9 @@ select permit, hullid, camsid, year, sum(nvl(lndlb,0)) as landings, sum(nvl(valu
     order by year, landings" ;
 		
 clear;
-jdbc load, exec("`sql'") case(lower) ;
+/*jdbc load, exec("`sql'") case(lower); */
+
+odbc load, exec("`sql'")  $myNEFSC_USERS_conn;
 destring permit, replace;
 
 save ${data_main}\commercial\MD_yearly_landings_by_type_${vintage_string}.dta, replace ;

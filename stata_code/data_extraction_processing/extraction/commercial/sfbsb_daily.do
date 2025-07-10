@@ -24,7 +24,7 @@ encode state, gen(mys);
 label define itis 172735 "Summer Flounder" 167687 "Black Sea Bass";
 
 label value itis_tsn itis;
-
+gen price=value/landings;
 order year date_trip value landings state mys price;
 
 

@@ -1,3 +1,10 @@
+cap mkdir "${data_main}\commercial"
+cap mkdir "${data_main}\recreational"
+
+cap mkdir "${data_raw}\commercial"
+cap mkdir "${data_raw}\recreational"
+
+
 do "$extraction_code/commercial/maryland_BSB.do"
 do "$extraction_code/commercial/commercial_BSB.do"
 do "$extraction_code/commercial/cams_gears.do"

@@ -4,7 +4,7 @@
 #delimit ;
 /* Pull data from CAMS, group by permit, year and species */
 clear;
-jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
+*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
 
 
 local sql "select permit, year, sum(nvl(lndlb,0)) as landings, sum(nvl(value,0)) as value, itis_tsn from cams_land cl where 
@@ -12,7 +12,11 @@ local sql "select permit, year, sum(nvl(lndlb,0)) as landings, sum(nvl(value,0))
         group by permit, year, itis_tsn" ;
 		
 clear;
-jdbc load, exec("`sql'") case(lower) ;
+
+/*jdbc load, exec("`sql'") case(lower); */
+
+odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
+
 destring permit, replace;
 
 gen str10 type="STATE" if inlist(permit,000000,190998,290998,390998,490998);
@@ -34,7 +38,11 @@ local sql "select sum(lndlb) as landings, sum(value) as value, year, state, itis
 	 
 	 
 clear;
-jdbc load, exec("`sql'") case(lower) ;
+
+/*jdbc load, exec("`sql'") case(lower); */
+
+odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
+
 
 save ${data_main}\commercial\subtrip_landings_${vintage_string}.dta, replace ;
 

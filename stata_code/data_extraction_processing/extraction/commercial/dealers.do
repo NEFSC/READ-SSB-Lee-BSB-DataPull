@@ -2,7 +2,7 @@
 
 # delimit ;
 clear;
-jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
+/*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd"); */
 
 
 local sql "select year, dnum, dlr, strt1, strt2, city, st, zip, doc from nefsc_garfo.permit_dealer" ;

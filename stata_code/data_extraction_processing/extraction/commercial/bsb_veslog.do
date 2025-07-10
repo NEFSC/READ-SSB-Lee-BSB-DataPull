@@ -1,7 +1,7 @@
 /* code to read in weekly landings of black sea bass and compute a price  */
 # delimit ;
 clear ;
-jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
+/*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd"); */
 
 
 
@@ -14,7 +14,10 @@ local sql "select EXTRACT(YEAR FROM d.date_land) as year, d.state1, sum(nvl(c.ke
     where c.species_id='BSB' and d.tripcatg in ('1','4')
     group by EXTRACT(YEAR FROM d.date_land), state1
     order by year, state1" ;
-jdbc load, exec("`sql'") case(lower);
+/*jdbc load, exec("`sql'") case(lower); */
+
+odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
+
 
 rename kept veslog_kept_lbs ;
 rename state1 state;

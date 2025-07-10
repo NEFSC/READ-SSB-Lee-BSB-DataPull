@@ -8,9 +8,11 @@ jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  
 
 
 
-local gears "select * from cams_garfo.cfg_negear";
+local sql "select * from cams_garfo.cfg_negear";
 	
-jdbc load, exec("`gears'") case(lower);
+/*jdbc load, exec("`sql'") case(lower); */
+odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
+
 destring, replace;
 compress;
 

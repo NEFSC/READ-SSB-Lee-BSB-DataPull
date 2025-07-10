@@ -114,7 +114,7 @@ save  $data_main/commercial/dealer_species_itis_ne$vintage_string.dta, replace;
 
 
 /* GEAR */
-
+/* this table is gone from Oracle
 local sql "select * from cams_garfo.CFG_MASTER_GEAR" ; 
 
 
@@ -126,7 +126,7 @@ compress;
 notes: "`sql'";
 
 save  $data_main/commercial/cams_master_gear_keyfile_$vintage_string.dta, replace;
-
+ */
 
 local sql "select * from cams_garfo.cfg_NEGEAR" ; 
 clear;

@@ -2,15 +2,18 @@
 
 # delimit ;
 clear;
-jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
+/*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd"); */
 
 
 
 
 /* pull in size keyfile data */
-local sizes "select nespp4, species_itis as itis_tsn, grade_code, grade_desc, market_code, market_desc, cf_lndlb_livlb from nefsc_garfo.scbi_species_itis_ne where species_itis=167687 order by nespp4";
+local sql "select nespp4, species_itis as itis_tsn, grade_code, grade_desc, market_code, market_desc, cf_lndlb_livlb from nefsc_garfo.scbi_species_itis_ne where species_itis=167687 order by nespp4";
 	
-jdbc load, exec("`sizes'") case(lower);
+/*jdbc load, exec("`sql'") case(lower); */
+
+odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
+
 duplicates drop;
 destring, replace;
 notes: grade_code=00 appears to be a "ungraded" and has a landed-live ratio that is 1.18, so it's probably a gutted weight.;
@@ -27,7 +30,10 @@ local sql "select year, month, week, dlr_date, dlr_mkt as market_code , dlr_grad
     group by dlr_mkt, dlr_grade, dlr_date, year, month, week, itis_tsn" ;
 	
 clear;	
-jdbc load, exec("`sql'") case(lower);
+/*jdbc load, exec("`sql'") case(lower); */
+
+odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
+
 
 
 
