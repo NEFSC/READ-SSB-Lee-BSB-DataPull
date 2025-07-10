@@ -5,7 +5,7 @@ program vintage_lookup_and_reset
 syntax [, search_folder(string)]
 
 if "`search_folder'" == "" {
-	local search_folder="$data_main"
+	local search_folder="$data_raw"
 }
  
 

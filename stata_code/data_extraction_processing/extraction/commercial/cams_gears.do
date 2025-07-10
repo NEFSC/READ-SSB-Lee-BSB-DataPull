@@ -16,5 +16,5 @@ odbc load, exec("`sql';") $myNEFSC_USERS_conn;
 destring, replace;
 compress;
 
-save "${data_main}\commercial\cams_gears_${vintage_string}.dta", replace;
+save "${data_raw}\commercial\cams_gears_${vintage_string}.dta", replace;
 

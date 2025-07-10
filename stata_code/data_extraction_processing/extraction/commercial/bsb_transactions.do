@@ -1,3 +1,4 @@
+/* this is probably the most important data pull for the prices in stock assessment paper */
 /* code to read in commercial landings of black sea bass and compute a price  */
 
 # delimit ;
@@ -30,4 +31,6 @@ save "${data_raw}\commercial\landings_all_${vintage_string}.dta", replace;
 merge m:1 itis_tsn grade_code market_code using "${data_raw}\commercial\bsb_sizes_${vintage_string}.dta", keep(1 3);
 
 rename _merge merge_species_codes;
+
+note: landings_all.dta was created by "bsb_transactions.do" ;
 save "${data_raw}\commercial\landings_all_${vintage_string}.dta", replace;

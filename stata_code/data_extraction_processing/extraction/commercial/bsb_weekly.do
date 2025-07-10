@@ -32,4 +32,4 @@ tsset mys weekly_date;
 
 gen price=value/landings;
 
-save "${data_main}\commercial\weekly_landings_${vintage_string}.dta", replace;
+save "${data_raw}/commercial/weekly_landings_${vintage_string}.dta", replace;

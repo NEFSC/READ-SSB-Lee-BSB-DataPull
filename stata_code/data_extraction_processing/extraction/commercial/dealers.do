@@ -37,4 +37,4 @@ save "${data_raw}\commercial\dealers_annual_${vintage_string}.dta", replace;
 bysort dnum (year): keep if _n==_N;
 drop year;
 
-save "${data_raw}\commercial\dealers_${vintage_string}.dta", replace
+save "${data_raw}\commercial\dealers_${vintage_string}.dta", replace ;

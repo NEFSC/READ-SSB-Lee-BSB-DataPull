@@ -28,4 +28,4 @@ gen price=value/landings;
 order year date_trip value landings state mys price;
 
 
-save "${data_main}\commercial\daily_${vintage_string}.dta", replace;
+save "${data_raw}\commercial\daily_${vintage_string}.dta", replace;

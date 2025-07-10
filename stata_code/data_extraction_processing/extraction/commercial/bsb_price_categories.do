@@ -44,8 +44,8 @@ format week month %02.0f;
 
 gen price=value/landings;
 
-save "${data_main}\commercial\daily_landings_category_${vintage_string}.dta", replace;
+save "${data_raw}\commercial\daily_landings_category_${vintage_string}.dta", replace;
 
 merge m:1 itis_tsn grade_code market_code using "${data_raw}\commercial\bsb_sizes_${vintage_string}.dta", keep(1 3);
 
-save "${data_main}\commercial\daily_landings_category_${vintage_string}.dta", replace;
+save "${data_raw}\commercial\daily_landings_category_${vintage_string}.dta", replace;

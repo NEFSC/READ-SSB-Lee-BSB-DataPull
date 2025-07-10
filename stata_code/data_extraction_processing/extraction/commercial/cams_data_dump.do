@@ -7,7 +7,7 @@ global lastyr = 2025;
 clear;
 
 
-cap mkdir $data_main/commercial/temp ;
+cap mkdir $data_raw/commercial/temp ;
 
 /* leave off schema for TTS */
 
@@ -68,27 +68,27 @@ foreach y of numlist $firstyr(1)$lastyr{;
 
 	notes: "`sql'";
 	notes: Joins of CAMS_SUBTRIP to CAMS_LAND must be done on CAMSID and subtrip;
-	save $data_main/commercial/temp/cams_subtrip_`y'_$vintage_string.dta, replace;
+	save $data_raw/commercial/temp/cams_subtrip_`y'_$vintage_string.dta, replace;
 
 	} ;
 	
 	
 	
-local st: dir "$data_main/commercial/temp" files "cams_subtrip_*_$vintage_string.dta" ;
+local st: dir "$data_raw/commercial/temp" files "cams_subtrip_*_$vintage_string.dta" ;
 clear;
 foreach l of local st{;
-	append using $data_main/commercial/temp/`l'	;
+	append using $data_raw/commercial/temp/`l'	;
 };
 destring, replace;
 compress;
 
 notes: Joins of CAMS_SUBTRIP to CAMS_LAND must be done on CAMSID and subtrip ;
-save $data_main/commercial/cams_subtrip_$vintage_string.dta, replace;
+save $data_raw/commercial/cams_subtrip_$vintage_string.dta, replace;
 	
 	
 	
 	foreach y of numlist $firstyr(1)$lastyr{;
-	rm $data_main/commercial/temp/cams_subtrip_`y'_$vintage_string.dta ;
+	rm $data_raw/commercial/temp/cams_subtrip_`y'_$vintage_string.dta ;
 };
 
 	
@@ -117,25 +117,25 @@ save $data_main/commercial/cams_subtrip_$vintage_string.dta, replace;
 	notes: "`sql'";
 
 
-	save $data_main/commercial/temp/cams_orphan_subtrip_`y'_$vintage_string.dta, replace;
+	save $data_raw/commercial/temp/cams_orphan_subtrip_`y'_$vintage_string.dta, replace;
 
 };
 
 
 
 
-local ost: dir "$data_main/commercial/temp" files "cams_orphan_subtrip_*_$vintage_string.dta" ;
+local ost: dir "$data_raw/commercial/temp" files "cams_orphan_subtrip_*_$vintage_string.dta" ;
 clear;
 foreach l of local ost{;
-	append using $data_main/commercial/temp/`l'	, force;
+	append using $data_raw/commercial/temp/`l'	, force;
 };
 
-save $data_main/commercial/cams_orphan_subtrip_$vintage_string.dta, replace;
+save $data_raw/commercial/cams_orphan_subtrip_$vintage_string.dta, replace;
 
 
 
 	foreach y of numlist $firstyr(1)$lastyr{;
-	rm $data_main/commercial/temp/cams_orphan_subtrip_`y'_$vintage_string.dta ;
+	rm $data_raw/commercial/temp/cams_orphan_subtrip_`y'_$vintage_string.dta ;
 };
 
 	

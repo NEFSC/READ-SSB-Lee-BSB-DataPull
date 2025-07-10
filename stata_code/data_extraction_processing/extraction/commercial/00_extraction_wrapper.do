@@ -17,7 +17,7 @@ do "$extraction_code/commercial/bsb_price_categories.do"
 
 
 do "$extraction_code/commercial/bsb_locations.do"
-do "$extraction_code/commercial/bsb_transactions.do"
+do "$extraction_code/commercial/bsb_transactions.do"  /* this is the most important data pull for the Prices in stock assessment Project */
 do "$extraction_code/commercial/bsb_veslog.do"
 do "$extraction_code/extract_data_from_FRED.do"
 
