@@ -134,7 +134,7 @@ gen price=value/lndlb
 
 /* merge deflators _merge=1 has been the current month */ 
 merge m:1 dateq using "$data_external/deflatorsQ_${in_string}.dta", keep(1 3)
-assert year==2024 & month>=9 if _merge==1
+assert year==2025 & month>=5 if _merge==1
 drop if _merge==1
 drop _merge
 
