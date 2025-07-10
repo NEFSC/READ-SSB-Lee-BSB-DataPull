@@ -1,8 +1,3 @@
-cap mkdir "${data_main}\commercial"
-cap mkdir "${data_main}\recreational"
-
-cap mkdir "${data_raw}\commercial"
-cap mkdir "${data_raw}\recreational"
 
 do "$analysis_code/bsb_cams_match_coverage.do"
 do "$analysis_code/prices_by_category.do"
