@@ -10,7 +10,7 @@ compress
 
 do $BSBDataPull
 
-save "$data_raw/commercial/tripid_operator.dta", replace
+save "$data_main/commercial/tripid_operator.dta", replace
 
 
 do $mobility
@@ -21,4 +21,4 @@ keep  operator_key_modified operator_key jops_full de address1 city address_key 
 
 do $BSBDataPull
 
-save "$data_raw/commercial/jops_operator.dta", replace
+save "$data_main/commercial/jops_operator.dta", replace

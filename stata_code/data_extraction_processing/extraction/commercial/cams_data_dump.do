@@ -83,7 +83,7 @@ destring, replace;
 compress;
 
 notes: Joins of CAMS_SUBTRIP to CAMS_LAND must be done on CAMSID and subtrip ;
-save $data_raw/commercial/cams_subtrip_$vintage_string.dta, replace;
+save $data_main/commercial/cams_subtrip_$vintage_string.dta, replace;
 	
 	
 	
@@ -130,7 +130,7 @@ foreach l of local ost{;
 	append using $data_raw/commercial/temp/`l'	, force;
 };
 
-save $data_raw/commercial/cams_orphan_subtrip_$vintage_string.dta, replace;
+save $data_main/commercial/cams_orphan_subtrip_$vintage_string.dta, replace;
 
 
 

@@ -29,7 +29,7 @@ graph export "state_landings_by_dersource.png", as(png)
 
 graph bar (asis) landings, over(state) asyvars stack over(dersource, label(angle(45))) legend(rows(3)) ytitle("Millions of pounds")
 
-graph export "dersource_landings_by_state.png", as(png)
+graph export "${exploratory}/dersource_landings_by_state.png", as(png)
 
 restore
 
@@ -41,5 +41,5 @@ collapse (sum) landings value, by(year dersource)
 
 
 graph bar (asis) landings, over(dersource) asyvars stack over(year, label(angle(45))) legend(rows(3)) ytitle("Millions of pounds")
-graph export "dersource_landings_over_time.png", as(png)
+graph export "${exploratory}/dersource_landings_over_time.png", as(png)
 

@@ -1,7 +1,7 @@
 /* state patterns of landings */
 global in_string 2025_07_09
 
-use  "${data_raw}\commercial\weekly_landings_${in_string}.dta", replace
+use  "${data_main}\commercial\weekly_landings_${in_string}.dta", replace
 
 graph box landings, over(week)
 

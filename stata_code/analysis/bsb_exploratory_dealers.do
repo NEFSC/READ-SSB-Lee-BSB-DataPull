@@ -3,7 +3,7 @@
 This code is exploratory and is not used to create any tables or figures */
 graph drop _all
 global in_string 2025_07_09
-use "${data_raw}\commercial\landings_all_${in_string}.dta", replace
+use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
 format dlr_date %td
@@ -16,7 +16,7 @@ format dateq %tq
 
 
 /* merge gearcodes */
-merge m:1 negear using "${data_raw}\commercial\cams_gears_${in_string}.dta", keep(1 3)
+merge m:1 negear using "${data_main}\commercial\cams_gears_${in_string}.dta", keep(1 3)
 
 assert _merge==3
 drop _merge
@@ -103,7 +103,7 @@ rename market_desc mym
 
 
 rename dlrid dnum 
-merge m:1 dnum year using  "${data_raw}\commercial\dealers_annual_${in_string}.dta", keep (1 3)
+merge m:1 dnum year using  "${data_main}\commercial\dealers_annual_${in_string}.dta", keep (1 3)
 rename dnum dlrid
 drop _merge
 
@@ -158,7 +158,7 @@ CFDERS_ALL_YEARS has a CF_License (Commercial fisherman license issued by a Stat
 */
 
 
-use "${data_raw}\commercial\landings_all_${in_string}.dta", replace
+use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
 format dlr_date %td

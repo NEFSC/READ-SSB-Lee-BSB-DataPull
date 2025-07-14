@@ -22,7 +22,7 @@ odbc load, exec("`sql';") $myNEFSC_USERS_conn;
 rename kept veslog_kept_lbs ;
 rename state1 state;
 compress;
-save "${data_raw}/commercial/veslog_annual_state_landings_${vintage_string}.dta", replace ;
+save "${data_main}/commercial/veslog_annual_state_landings_${vintage_string}.dta", replace ;
 
 collapse (sum) veslog_kept_lbs, by(year) ;
-save "${data_raw}/commercial/veslog_annual_landings_${vintage_string}.dta", replace ;
+save "${data_main}/commercial/veslog_annual_landings_${vintage_string}.dta", replace ;

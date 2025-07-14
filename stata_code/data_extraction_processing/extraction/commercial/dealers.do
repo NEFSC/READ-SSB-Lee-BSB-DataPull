@@ -31,10 +31,10 @@ foreach var of varlist strt1 strt2 city st zip{;
 
 rename dlr dlr_name;
 
-save "${data_raw}\commercial\dealers_annual_${vintage_string}.dta", replace;
+save "${data_main}\commercial\dealers_annual_${vintage_string}.dta", replace;
 
 
 bysort dnum (year): keep if _n==_N;
 drop year;
 
-save "${data_raw}\commercial\dealers_${vintage_string}.dta", replace ;
+save "${data_main}\commercial\dealers_${vintage_string}.dta", replace ;

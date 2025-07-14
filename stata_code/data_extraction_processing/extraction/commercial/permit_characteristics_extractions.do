@@ -25,7 +25,7 @@ gen  myde=min(end_date, date_expired, date_canceled);
 format myde %td;
 drop if start_date>=myde | start_date>=myde;
 
-save ${data_raw}/commercial/vps_fishery_raw_$today_date_string.dta, replace ;
+save ${data_main}/commercial/vps_fishery_raw_$today_date_string.dta, replace ;
 
 
 /*I want to make a dataset that contains the VP_NUM, FY, PLANS_CATS that were active in a FY */
@@ -77,7 +77,7 @@ renvars a*, predrop(1);
 rename vp_num permit;
 qui compress;
 notes: made by "permit_characteristics_extractions.do";
-save ${data_raw}\commercial/permit_working_$today_date_string.dta, replace ;
+save ${data_main}\commercial/permit_working_$today_date_string.dta, replace ;
 
 
 
@@ -129,12 +129,12 @@ rename vp_num permit;
 /* This bit joins them */
 
 merge 1:1 permit fishing_year using ${data_raw}/commercial/permit_working_$today_date_string;
-save ${data_raw}/commercial/permit_portfolio_$today_date_string,  replace;
+save ${data_main}/commercial/permit_portfolio_$today_date_string,  replace;
 
 
 keep hull_id fishing_year max_trap_limit;
 
-save "${data_raw}/commercial/lobster_traps_$today_date_string", replace;
+save "${data_main}/commercial/lobster_traps_$today_date_string", replace;
 
 
 

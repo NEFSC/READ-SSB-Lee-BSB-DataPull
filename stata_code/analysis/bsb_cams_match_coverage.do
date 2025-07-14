@@ -1,7 +1,7 @@
 /* how much landings has status=match*/
 graph drop _all
 global in_string 2025_07_09
-use "${data_raw}\commercial\landings_all_${in_string}.dta", replace
+use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
 format dlr_date %td
@@ -62,7 +62,7 @@ rename lndlb0 cams_landings_nomatch
 rename lndlb1 cams_landings_match
 
 
-merge 1:1 year using "${data_raw}\commercial\veslog_annual_landings_${in_string}.dta", keep(1 3)
+merge 1:1 year using "${data_main}\commercial\veslog_annual_landings_${in_string}.dta", keep(1 3)
 assert _merge==3
 drop _merge
 compress
@@ -88,7 +88,7 @@ rename lndlb1 cams_landings_match
 
 
 
-merge 1:1 state year using "${data_raw}\commercial\veslog_annual_state_landings_${in_string}.dta", keep(1 3)
+merge 1:1 state year using "${data_main}\commercial\veslog_annual_state_landings_${in_string}.dta", keep(1 3)
 keep if inlist(state,"CT","DE", "MA","MD", "NC","NJ", "NY","RI","VA")
 
 

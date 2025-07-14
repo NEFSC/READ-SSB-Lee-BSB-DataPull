@@ -3,7 +3,7 @@
 This code is exploratory and makes some figures and tables. */
 graph drop _all
 global in_string 2025_07_09
-use "${data_raw}\commercial\landings_all_${in_string}.dta", replace
+use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
 format dlr_date %td
@@ -22,7 +22,7 @@ replace questionable_status=1 if  status=="PZERO" & state=="DE" & day==1 & port=
 
 
 /* merge gearcodes */
-merge m:1 negear using "${data_raw}\commercial\cams_gears_${in_string}.dta", keep(1 3)
+merge m:1 negear using "${data_main}\commercial\cams_gears_${in_string}.dta", keep(1 3)
 
 assert _merge==3
 drop _merge

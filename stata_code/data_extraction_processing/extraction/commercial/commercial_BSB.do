@@ -24,7 +24,7 @@ replace type="FEDERAL" if type=="";
 
 
 
-save ${data_raw}\commercial\yearly_landings_by_type_${vintage_string}.dta, replace ;
+save ${data_main}\commercial\yearly_landings_by_type_${vintage_string}.dta, replace ;
 
 
 /* select trip level landings of all species from trips that had at least 100lbs of black sea bass landings */
@@ -44,7 +44,7 @@ clear;
 odbc load, exec("`sql';") $myNEFSC_USERS_conn; 
 
 
-save ${data_raw}\commercial\subtrip_landings_${vintage_string}.dta, replace ;
+save ${data_main}\commercial\subtrip_landings_${vintage_string}.dta, replace ;
 
 
 collapse (sum) landings value, by(itis_tsn year itis_group);
@@ -57,4 +57,4 @@ drop tv;
 gsort year -pct;
 browse if pct>=.01;
 
-save ${data_raw}\commercial\annual_landings_on_BSB_trips_${vintage_string}.dta, replace ;
+save ${data_main}\commercial\annual_landings_on_BSB_trips_${vintage_string}.dta, replace ;
