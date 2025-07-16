@@ -1,3 +1,5 @@
+global in_string 2025_07_09
+
 
 do "$analysis_code/bsb_cams_match_coverage.do"
 do "$analysis_code/prices_by_category.do"

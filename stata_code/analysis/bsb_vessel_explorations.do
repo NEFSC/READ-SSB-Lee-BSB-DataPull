@@ -1,9 +1,19 @@
+**********************************************************************
+* Purpose: 	Explore pricing at the daily level.
+* Inputs:
+*   - landings_all_$date.dta (from bsb_transactions.do)
+*
+* Outputs:
+*   - stacked bar graphs of landings by permit.  
+
+**********************************************************************
+
+
 /* code to do some data explorations on DE */
 /*before you can run this, you must run the data extraction wrappers
 */
 
 graph drop _all
-global in_string 2025_07_09
 use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)

@@ -1,8 +1,24 @@
+**********************************************************************
+* Purpose: 	Explore the data, try out diferent kinds of data cleaning.
+* Rebin DLR_ORPHAN_SPECIES to MATCH and make some graphs and summary statistics
+* Inputs:
+*   - landings_all_$date.dta (from bsb_transactions.do)
+*   - cams_gears_$date.dta (from bsb_transactions.do)
+*   - deflatorsQ_${in_string}.shp (extract_data_from_FRED.do)
+
+*
+* Outputs:
+*   - xtlines of prices
+*   - histograms of prices by market category *used in presentations/manuscript*
+*   - no data created.
+
+**********************************************************************
+
+
 /* this was used to inform some of my data cleaning, so I'm not going to replace all the datacleaning steps. 
 
 This code is exploratory and makes some figures and tables. */
 graph drop _all
-global in_string 2025_07_09
 use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
@@ -219,6 +235,9 @@ foreach l of local sizes{
 
 graph combine pJumbo pLarge pMedium pSmall_Comb pUnclassified, name(price_hist, replace)
 graph export ${exploratory}\price_histograms.png, as(png) width(2000) replace
+
+/*these are in the manuscript */
+
 graph combine wpJumbo wpLarge wpMedium wpSmall_Comb wpUnclassified, name(wprice_hist, replace)
 graph export ${exploratory}\wprice_histograms.png, as(png) width(2000) replace
 

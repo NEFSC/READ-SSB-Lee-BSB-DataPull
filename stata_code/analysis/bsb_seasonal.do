@@ -1,5 +1,16 @@
+**********************************************************************
+* Purpose: 	explore state landings.
+* Inputs:
+*   - weekly_landings_$date.dta (from bsb.weekly)
+*
+* Outputs:
+*   - xtlines of landings over state value.  
+*   - zoom in on some states
+
+**********************************************************************
+
+
 /* state patterns of landings */
-global in_string 2025_07_09
 
 use  "${data_main}\commercial\weekly_landings_${in_string}.dta", replace
 

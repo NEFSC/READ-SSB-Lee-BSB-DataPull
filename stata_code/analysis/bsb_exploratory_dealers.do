@@ -1,8 +1,21 @@
-/* this was used to inform some of my data cleaning, so I'm not going to replace all the datacleaning steps. 
+**********************************************************************
+* Purpose: 	Explore the data, try out diferent kinds of data cleaning.
+* Learn where the unclassifieds are coming from. 
+* Inputs:
+*   - landings_all_$date.dta (from bsb_transactions.do)
+*   - cams_gears_$date.dta (from bsb_transactions.do)
+*   - dealers_annual_${in_string}.shp (dealers.do)
 
-This code is exploratory and is not used to create any tables or figures */
+*
+* Outputs:
+*   - no data created.
+
+**********************************************************************
+
+
+
+/* this was used to inform some of my data cleaning, so I'm not going to replace all the datacleaning steps. */
 graph drop _all
-global in_string 2025_07_09
 use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
