@@ -1,8 +1,17 @@
+**********************************************************************
+* Purpose: 	Explore pricing at the daily level.
+* Inputs:
+*   - daily_landings_category_$date.dta (from ?)
+*
+* Outputs:
+*   - xtlines of of prices, landings, value.  
+*   - very simple hentoic model.
+
+**********************************************************************
+
 /* code to explore prices by market category*/
 
-global vintage_string 2025_07_09
-
-use "${data_main}\commercial\daily_landings_category_${vintage_string}.dta", replace
+use "${data_main}\commercial\daily_landings_category_${in_string}.dta", replace
 keep if _merge==3
 /* make line and box plots of prices and volumes by grade and market code */
 

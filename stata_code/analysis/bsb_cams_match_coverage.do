@@ -1,6 +1,22 @@
+**********************************************************************
+* Purpose: 	Investigate CAMS's Status variable for BSB.
+* Rebin DLR_ORPHAN_SPECIES to MATCH and make some graphs and summary statistics
+* Inputs:
+*   - landings_all_$date.dta (from bsb_transactions.do)
+*   - veslog_annual_landings_${in_string}.shp (bsb_veslog.do)
+*   - veslog_annual_state_landings_${in_string}.shp (bsb_veslog.do)
+*
+* Outputs:
+*   - xtlines of match fractions by state
+*   - xtlines of cams landings by status and veslog hails.
+
+**********************************************************************
+
+
+
+
 /* how much landings has status=match*/
 graph drop _all
-global in_string 2025_07_09
 use "${data_main}\commercial\landings_all_${in_string}.dta", replace
 drop if merge_species_codes==1
 replace dlr_date=dofc(dlr_date)
