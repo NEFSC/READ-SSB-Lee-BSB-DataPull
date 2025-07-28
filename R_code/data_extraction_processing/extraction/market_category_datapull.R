@@ -1,3 +1,21 @@
+###############################################################################
+# Purpose: 	Extract Market Category Data to look for suitable species and stocks to generalize 
+
+# Requirements:
+# Connection to Oracle
+
+# Inputs:
+#  - None
+
+
+# Outputs:
+#  - landings dataset
+#  - grade keyfile 
+#  - market category keyfile
+
+###############################################################################  
+
+
 library("ROracle")
 library("glue")
 library("tidyverse")
@@ -23,7 +41,7 @@ grade_query<-glue("select distinct species_itis as itis_tsn, grade_code, grade_d
 
 markets_query<-glue("select distinct species_itis as itis_tsn, market_code, market_desc from nefsc_garfo.scbi_species_itis_ne order by itis_tsn, market_code")
 
-landings_query<-glue("select camsid, cl.itis_tsn, dlr_mkt, dlr_grade, lndlb, value,itis.itis_sci_name, itis.fmp, itis.council from cams_land cl
+landings_query<-glue("select year, camsid, cl.itis_tsn, dlr_mkt, dlr_grade, lndlb, value,itis.itis_sci_name, itis.fmp, itis.council from cams_land cl
     left join cams_garfo.cfg_itis itis on cl.itis_tsn=itis.itis_tsn
     where year between {year_start} and {year_end} and itis.council is not null
     order by cl.itis_tsn, itis_sci_name, fmp, council, year ")
