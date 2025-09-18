@@ -1,4 +1,11 @@
-/* code to read in weekly commercial landings of black sea bass and compute a price  */
+
+********************************************************************************
+* bsb_price_categories.do 
+* Purpose: 	code to read in weekly commercial landings of black sea bass and compute a price  
+
+********************************************************************************
+
+
 
 # delimit ;
 clear;

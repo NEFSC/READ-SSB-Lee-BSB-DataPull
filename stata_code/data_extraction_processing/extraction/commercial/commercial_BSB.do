@@ -1,5 +1,10 @@
+********************************************************************************
+* commercial_BSB.do 
 /* code to read in annual landings of black sea bass by permit */
 /* code to read in trip-level landings of all species on commercial trips that landed at least 100lbs of BSB */
+********************************************************************************
+
+
 
 #delimit ;
 /* Pull data from CAMS, group by permit, year and species */

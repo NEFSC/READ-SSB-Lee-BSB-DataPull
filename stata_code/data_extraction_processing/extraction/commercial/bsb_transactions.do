@@ -1,5 +1,12 @@
+********************************************************************************
+* bsb_transactions.do 
+* Purpose: 	code to read in transaction level info from CAMS for commercial black sea bass  
 /* this is probably the most important data pull for the prices in stock assessment paper */
-/* code to read in commercial landings of black sea bass and compute a price  */
+
+********************************************************************************
+
+
+
 
 # delimit ;
 clear;

@@ -1,4 +1,8 @@
-/* code to read in Maryland "IFQ" landings by permit 
+********************************************************************************
+* Maryland "IFQ" landings by permit 
+* Purpose: 	code to read in Maryland "IFQ" landings by permit
+********************************************************************************
+/*
 Maryland has a 50 lbs 'open access' possession limit for BSB and up to 14 landings permits.  
 
 This code filters out:

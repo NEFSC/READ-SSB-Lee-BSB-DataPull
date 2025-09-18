@@ -1,10 +1,14 @@
-cap mkdir "${data_main}\commercial"
-cap mkdir "${data_main}\recreational"
+********************************************************************************
+* Black Sea bass extraction wrapper 
+* Purpose: 	wrapper to get data for the prices in stock assessment project
+********************************************************************************
+/*
+These are a bit meandering.  There's lots of little one-off investigations.
 
-cap mkdir "${data_raw}\commercial"
-cap mkdir "${data_raw}\recreational"
+*/
 
 
+/* code to pull Maryland "IFQ" landings by permit */
 do "$extraction_code/commercial/maryland_BSB.do"
 do "$extraction_code/commercial/commercial_BSB.do"
 do "$extraction_code/commercial/cams_gears.do"
@@ -22,6 +26,8 @@ do "$extraction_code/commercial/bsb_veslog.do"
 do "$extraction_code/extract_data_from_FRED.do"
 
 do "$extraction_code/permit_characteristics_extractions.do"
+
+
 
 do "$extraction_code/commercial/bsb_dersource_investigations.do"
 

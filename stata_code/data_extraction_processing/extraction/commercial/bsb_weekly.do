@@ -1,7 +1,16 @@
+********************************************************************************
+* bsb_weekly.do 
+* Purpose: 	code to read in weekly landings of black sea bass and compute a price.   
+
+********************************************************************************
+
+
+
+
 # delimit ;
 clear ;
 
-/* code to read in weekly landings of black sea bass and compute a price  */
+/*   */
 
 /*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd") */
 

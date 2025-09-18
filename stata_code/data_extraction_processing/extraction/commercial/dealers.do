@@ -1,3 +1,10 @@
+
+********************************************************************************
+* dealers.do 
+* Purpose: 	code to pull information about dealers. This overlaps with the cams_keyfile data pull
+********************************************************************************
+
+
 /* code to read in weekly landings of black sea bass and compute a price  */
 
 # delimit ;

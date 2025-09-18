@@ -1,3 +1,12 @@
+********************************************************************************
+* bsb_locations 
+* Purpose: 	compute weighted average lat and lon of the trip, by state, permit, and year.
+********************************************************************************
+/*
+This is useful to get a quick snapshot of where fishing occurs, although you will have to aggregate further (to the state level )
+*/
+
+
 /* code to read in weekly landings of black sea bass and compute a price  */
 
 

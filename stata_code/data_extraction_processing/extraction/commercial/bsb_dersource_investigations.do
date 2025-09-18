@@ -1,4 +1,11 @@
-/* code to read in commercial landings of black sea bass and compute a price  */
+********************************************************************************
+* BSB_dersource_investigations 
+* Purpose: 	extract landings by dersource and make some charts and graphs.
+********************************************************************************
+/*
+This is a a bit of quality assurance. landings come into the dealer databases from a variety of sources
+
+*/
 
 # delimit ;
 clear;

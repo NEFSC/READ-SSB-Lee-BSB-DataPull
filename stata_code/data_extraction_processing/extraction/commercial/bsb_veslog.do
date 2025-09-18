@@ -1,4 +1,13 @@
-/* code to read in weekly landings of black sea bass and compute a price  */
+********************************************************************************
+* bsb_veslog.do 
+* Purpose: 	code to read in veslog information.   
+* this is used to understand how good CAMS is in terms of coverage. 
+
+********************************************************************************
+
+
+
+
 # delimit ;
 clear ;
 /*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd"); */

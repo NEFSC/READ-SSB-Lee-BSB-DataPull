@@ -1,4 +1,9 @@
-/* THIS BIT OF CODE IS USED TO EXTRACT VESSEL PERMITS*/
+********************************************************************************
+* permit_characteristics_extractions 
+* THIS BIT OF CODE IS USED TO EXTRACT VESSEL PERMITS and their attributes 
+********************************************************************************
+
+
 #delimit;
 
 global lastyr 2025;

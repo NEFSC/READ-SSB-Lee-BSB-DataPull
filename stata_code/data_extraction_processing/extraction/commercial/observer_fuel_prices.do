@@ -1,3 +1,9 @@
+********************************************************************************
+* observer_fuel_prices 
+* Purpose: 	pull fuel prices from the observer data
+********************************************************************************
+
+
 #delimit ;
 local date: display %td_CCYY_NN_DD date(c(current_date), "DMY");
 global today_date_string = subinstr(trim("`date'"), " " , "_", .);
