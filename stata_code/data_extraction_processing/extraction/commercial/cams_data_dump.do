@@ -1,3 +1,24 @@
+********************************************************************************
+* Black Sea bass CAMS data dump  
+* Purpose: 	Get cams data
+********************************************************************************
+/*
+
+CAMS is a GARFO data project that joins together all sorts of data. 
+
+Informationa about CAMS can be found here
+https://apps-garfo.fisheries.noaa.gov/cams/
+
+Social Science specific tips can be found here
+https://github.com/NEFSC/READ-SSB-metadata
+
+
+The code was intially set up to use jdbc to extract data. that takes a long time and weve used odbc instead .
+*/
+
+
+
+
 #delimit ;
 
 /*jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
@@ -9,9 +30,9 @@ clear;
 
 cap mkdir $data_raw/commercial/temp ;
 
-/* leave off schema for TTS */
 
-
+/* year by year, pull cams_land data */
+/* the files are so large, that you might have problems getting everything */
 
 foreach y of numlist $firstyr(1)$lastyr{;
 
@@ -34,6 +55,8 @@ foreach y of numlist $firstyr(1)$lastyr{;
 
 };
 
+/* append the data together and save in a single file*/
+
 local landfiles: dir "$data_raw/commercial/temp" files "cams_land_*_$vintage_string.dta" ;
 
 clear;
@@ -46,6 +69,8 @@ compress;
 
 save $data_main/commercial/cams_land_$vintage_string.dta, replace;
 
+/* delete the yearly files*/
+
 foreach y of numlist $firstyr(1)$lastyr{;
 	rm $data_raw/commercial/temp/cams_land_`y'_$vintage_string.dta ;
 };
@@ -53,7 +78,7 @@ foreach y of numlist $firstyr(1)$lastyr{;
 
 
 
-	
+/* repeat for the trip level information */	
 	
 	foreach y of numlist $firstyr(1)$lastyr{;
 
@@ -97,7 +122,8 @@ save $data_main/commercial/cams_subtrip_$vintage_string.dta, replace;
 	
 	
 	
-	
+	/* repeat for the VTR_ORPHAN_SUBTRIP information. VTR_ORPHANS_SUBTRIP are VTR records that did not match to a Dealer record */	
+
 	foreach y of numlist $firstyr(1)$lastyr{;
 
 	/* orphan subtrip */

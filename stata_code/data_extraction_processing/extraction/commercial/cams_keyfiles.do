@@ -1,5 +1,32 @@
+********************************************************************************
+* Black Sea bass cams keyfiles  
+* Purpose: 	Get cams keyfiles
+********************************************************************************
+/*
+This pulls the keyfiles from CAMS. It is pretty quick to run.
+
+CAMS is a GARFO data project that joins together all sorts of data. 
+
+Informationa about CAMS can be found here
+https://apps-garfo.fisheries.noaa.gov/cams/
+
+Social Science specific tips can be found here
+https://github.com/NEFSC/READ-SSB-metadata
+
+
+The code was intially set up to use jdbc to extract data. that takes a long time and weve used odbc instead .
+*/
+
+
+
+
+
 # delimit ;
-/* ITIS TSN keyfile */
+/* ITIS TSN keyfile
+
+This gets the ITIS TSNs which decodes the numeric keys into species names.
+
+*/
 clear;
 jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
 
@@ -14,9 +41,12 @@ compress;
 notes: "`sql'";
 save  ${data_main}/commercial/cams_species_keyfile_$vintage_string.dta, replace;
 
-/* Port keyfile 
+/* Port keyfiles 
+CAMS: Port is 
+A combined code for state, port and county. Taken with priority from CFDERS -> VTR PORT1 -> PRINC_PORT (permit data). Unknown = 990999. Named ports in VTR are converted to port numbers using the VTR.VLPORTTBL table. 
 
-A combined code for state, port and county. Taken with priority from CFDERS -> VTR PORT1 -> PRINC_PORT (permit data). Unknown = 990999. Named ports in VTR are converted to port numbers using the VTR.VLPORTTBL table. */
+There are 3 port tables, one in CAMS, one in CFDBS (Dealer database), and one in the trip reports database (VTR)
+*/
 
 local sql "select * from CAMS_GARFO.CFG_PORT" ; 
 
@@ -79,7 +109,7 @@ save  ${data_main}/commercial/trip_reports_port_$vintage_string.dta, replace;
 
 
 
-
+/* Pull dealer information*/
 
 
 local sql "select * from NEFSC_GARFO.PERMIT_DEALER" ; 
