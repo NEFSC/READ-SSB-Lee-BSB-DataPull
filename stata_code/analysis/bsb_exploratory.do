@@ -590,10 +590,10 @@ foreach l of local state_names{
 		keep if state_string=="`l'"
 		tsset market_desc year
 
-		xtline price if inlist(market_desc,1,2,3,4)==1, overlay xlabel(1995(5)2025) xmtick(##5) title("`l'")
+		xtline price if inlist(market_desc,1,2,3,4)==1 & price<=6, overlay xlabel(2010(5)2025) xmtick(##5) title("`l'")
 		graph export ${exploratory}\price_overtime_`l'.png, as(png) width(2000) replace
 		
-		xtline priceR_CPI if inlist(market_desc,1,2,3,4)==1, overlay xlabel(1995(5)2025) xmtick(##5) title("`l'")
+		xtline priceR_CPI if inlist(market_desc,1,2,3,4)==1 & priceR_CPI<=6, overlay xlabel(2010(5)2025) xmtick(##5) title("`l'")
 		graph export ${exploratory}\priceR_overtime_`l'.png, as(png) width(2000) replace
 
 
@@ -618,10 +618,10 @@ foreach l of local sizes{
 		local f0: label market_category `l'
 		tsset state year
 
-		xtline price, overlay xlabel(1995(5)2025) xmtick(##5) title("`f0'") legend(rows(2))
+		xtline price, overlay xlabel(2010(5)2025) xmtick(##5) title("`f0'") legend(cols(1) position(3))
 		graph export ${exploratory}\price_overstate_`l'.png, as(png) width(2000) replace
 		
-		xtline priceR_CPI, overlay xlabel(1995(5)2025) xmtick(##5) title("`f0'") legend(rows(2))
+		xtline priceR_CPI, overlay xlabel(2010(5)2025) xmtick(##5) title("`f0'") legend(cols(1) position(3))
 		graph export ${exploratory}\priceR_overstate_`l'.png, as(png) width(2000) replace
 
 
