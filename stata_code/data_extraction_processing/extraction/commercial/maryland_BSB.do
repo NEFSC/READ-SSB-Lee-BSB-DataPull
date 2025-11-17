@@ -22,7 +22,7 @@ clear;
 
 
 local sql "select permit, hullid, year, sum(landings) as landings, sum(value) as value from ( 
-select permit, hullid, camsid, year, sum(nvl(lndlb,0)) as landings, sum(nvl(value,0)) as value from cams_land cl 
+select permit, hullid, camsid, year, sum(nvl(lndlb,0)) as landings, sum(nvl(value,0)) as value from cams_garfo.cams_land cl 
     where cl.itis_tsn=167687 and cl.state='MD' and cl.year>=2010 and cl.rec=0
     group by permit, hullid, camsid, year) A 
     where A.landings>50
