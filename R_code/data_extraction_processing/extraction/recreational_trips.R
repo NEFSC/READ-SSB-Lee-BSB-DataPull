@@ -1,5 +1,5 @@
 ###############################################################################
-# Purpose: 	Extract Market Category Data to look for suitable species and stocks to generalize 
+# Purpose: 	Extract angler trips by and construct revenue 
 
 # Requirements:
 # Connection to Oracle
@@ -9,10 +9,8 @@
 
 
 # Outputs:
-#  - landings dataset
-#  - grade keyfile 
-#  - market category keyfile
-
+#  - angler_trips_ dataset containing permit number, year, docid, angler trips, revenue per angler-trip, and docid-level revenue
+  
 ###############################################################################  
 
 
