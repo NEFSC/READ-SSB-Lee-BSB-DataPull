@@ -24,7 +24,7 @@ here::i_am("R_code/data_extraction_processing/extraction/recreational_trips.R")
 
 vintage_string<-format(Sys.Date())
 
-year_start<-2000
+year_start<-1996
 year_end<-2024
 
 #Set up the oracle connection
