@@ -8,13 +8,17 @@ clear ;
 
 
 
-local sql "select year, date_trip, itis_tsn, sum(nvl(value,0)) as value, sum(nvl(lndlb,0)) as landings, state from cams_land 
+local sql "select TO_CHAR(trunc(date_trip),'MM-DD-YYYY') as date_trip_str, itis_tsn, sum(nvl(value,0)) as value, sum(nvl(lndlb,0)) as landings, state from cams_garfo.cams_land 
     where itis_tsn in ('167687','172735') and rec=0 
-	group by year, date_trip, state, itis_tsn
-    order by itis_tsn, state, year, date_trip" ;
+	group by TO_CHAR(trunc(date_trip),'MM-DD-YYYY'), state, itis_tsn" ;
 
 
 odbc load, exec("`sql'")  $myNEFSC_USERS_conn;
+
+
+gen date_trip=date(date_trip_str,"MDY");
+format date_trip %td;
+gen year=year(date_trip);
 
 
 destring, replace;

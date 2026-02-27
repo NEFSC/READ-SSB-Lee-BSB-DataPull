@@ -12,7 +12,7 @@ clear;
 *jdbc connect , jar("$jar")  driverclass("$classname")  url("$NEFSC_USERS_URL")  user("$myuid") password("$mypwd");
 
 
-local sql "select permit, year, sum(nvl(lndlb,0)) as landings, sum(nvl(value,0)) as value, itis_tsn from cams_land cl where 
+local sql "select permit, year, sum(nvl(lndlb,0)) as landings, sum(nvl(value,0)) as value, itis_tsn from cams_garfo.cams_land cl where 
 		cl.itis_tsn =167687 and cl.rec=0
         group by permit, year, itis_tsn" ;
 		
@@ -33,7 +33,7 @@ save ${data_main}\commercial\yearly_landings_by_type_${vintage_string}.dta, repl
 
 
 /* select trip level landings of all species from trips that had at least 100lbs of black sea bass landings */
-local sql "select sum(lndlb) as landings, sum(value) as value, year, state, itis_tsn, itis_group1 from cams_land where camsid in (
+local sql "select sum(lndlb) as landings, sum(value) as value, year, state, itis_tsn, itis_group1 from cams_garfo.cams_land where camsid in (
 	select distinct camsid from (
 		select camsid, sum(lndlb) as landings from cams_land where itis_tsn=167687 and rec=0 group by camsid)
 	where landings>100

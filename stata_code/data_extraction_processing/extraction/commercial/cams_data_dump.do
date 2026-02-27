@@ -38,7 +38,7 @@ foreach y of numlist $firstyr(1)$lastyr{;
 
 	/* landings */
 
-	local sql "select * from cams_land cl
+	local sql "select * from cams_garfo.cams_land cl
 		where cl.year=`y' and cl.rec=0" ; 
 
 
@@ -85,7 +85,7 @@ foreach y of numlist $firstyr(1)$lastyr{;
 	/*subtrip */
 
 	clear;
-	local sql "select * from cams_subtrip where year=`y'" ; 
+	local sql "select * from cams_garfo.cams_subtrip where year=`y'" ; 
 	
 	/*	
 	jdbc load, exec("`sql'") case(lower);
@@ -130,7 +130,7 @@ save $data_main/commercial/cams_subtrip_$vintage_string.dta, replace;
 	clear;
 
 
-	local sql "select * from CAMS_VTR_ORPHANS_SUBTRIP where year=`y'" ; 
+	local sql "select * from cams_garfo.CAMS_VTR_ORPHANS_SUBTRIP where year=`y'" ; 
 		
 		
 	/*	

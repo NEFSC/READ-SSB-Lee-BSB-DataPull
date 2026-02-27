@@ -17,11 +17,20 @@ clear ;
 
 
 
-local sql "select year, week, sum(value) as value, sum(lndlb) as landings, state from cams_land where itis_tsn='167687' and rec=0 group by year, week, state" ;
+local sql "select TO_CHAR(trunc(dlr_date),'MM-DD-YYYY') as dlr_date_str, sum(value) as value, sum(lndlb) as landings, state from cams_garfo.cams_land 
+	where itis_tsn='167687' and 
+	rec=0 
+	group by TO_CHAR(trunc(dlr_date),'MM-DD-YYYY'), state" ;
 /*jdbc load, exec("`sql'") case(lower); */
 
 odbc load, exec("`sql';") $myNEFSC_USERS_conn ;
 
+
+
+gen dlr_date=date(dlr_date_str,"MDY");
+format dlr_date %td;
+gen year=year(dlr_date);
+gen week=week(dlr_date);
 
 
 
@@ -33,9 +42,9 @@ format week %02.0f ;
 encode state, gen(mys);
 
 gen weekly_date=yw(year, week);
-
 format weekly_date %tw;
 
+collapse (sum) landings value, by(mys weekly_date);
 tsset mys weekly_date;
 
 
