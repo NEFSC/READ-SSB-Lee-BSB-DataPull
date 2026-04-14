@@ -129,6 +129,13 @@ five final categories. Source: `stata_code/analysis/bsb_exploratory.do` lines 53
 > rebinned into `Misc`. The final analysis uses five categories: LineHand,
 > Trawl, Gillnet, PotTrap, Misc.
 
+> Gear and market category definitions are embedded directly in the
+> analysis scripts. `stata_code/analysis/bsb_exploratory.do` is the
+> primary reference (lines 53–97). The same logic appears in
+> `prices_by_category.do` (market rebinning only) and
+> `bsb_exploratory_dealers.do` (market rebinning, with Pee Wee kept
+> as Extra Small rather than folded into Small).
+
 ## Market Category Codes
 
 BSB is sold in five size-based market categories. Raw dealer records contain

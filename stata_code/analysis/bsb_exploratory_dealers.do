@@ -178,6 +178,15 @@ format dlr_date %td
 gen dateq=qofd(dlr_date)
 format dateq %tq
 
+/* -------------------------------------------------------------------
+   MARKET CATEGORY REBINNING (dealer-focused analysis)
+   Standardizes raw market codes; intentionally differs from
+   bsb_exploratory.do in one rule: Pee Wee (PW) is kept as Extra
+   Small (ES) here, rather than rebinned into Small (SQ).
+   This preserves finer size detail for dealer-pattern analysis.
+   Full code table in README. If rules change, review all three files:
+   bsb_exploratory.do, prices_by_category.do, bsb_exploratory_dealers.do.
+   ------------------------------------------------------------------- */
 replace market_desc="UNCLASSIFIED" if market_desc=="MIXED OR UNSIZED"
 replace market_code="UN" if market_code=="MX"
 replace market_desc="MEDIUM" if market_desc=="MEDIUM OR SELECT"

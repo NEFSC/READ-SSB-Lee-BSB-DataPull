@@ -44,6 +44,14 @@ assert _merge==3
 drop _merge
 
 
+/* -------------------------------------------------------------------
+   GEAR CATEGORY MAPPING
+   Maps 40+ NEFSC negear codes into 5 final categories:
+   LineHand, Trawl, Gillnet, PotTrap, Misc (Dredge + Seine + Unknown).
+   Source: NEFSC negear classification. Full lookup table in README.
+   NOTE: This mapping also appears in prices_by_category.do.
+   If categories change, update both files.
+   ------------------------------------------------------------------- */
 /* need to construct a gear category variable , based on the gear lookup table*/
 /*
 order negear negear_name mesh_match secgear_mapped fmcode
@@ -75,7 +83,16 @@ replace mygear="Unknown" if inlist(negear,999)
 replace mygear="Misc" if inlist(mygear,"Dredge","Unknown", "Seine")
 
 
-/* rebin Mixed or unsized to unclassified*/ 
+/* -------------------------------------------------------------------
+   MARKET CATEGORY REBINNING
+   Standardizes raw dealer market codes into 5 analysis categories.
+   Rules: MX (Mixed/Unsized) -> UN (Unclassified)
+          PW (Pee Wee) + ES (Extra Small) -> SQ (Small)
+          XG (Extra Large) -> JB (Jumbo)
+   Full code table in README. Logic also in prices_by_category.do and
+   bsb_exploratory_dealers.do — update all three if rules change.
+   ------------------------------------------------------------------- */
+/* rebin Mixed or unsized to unclassified*/
 
 replace market_desc="UNCLASSIFIED" if market_desc=="MIXED OR UNSIZED"
 replace market_code="UN" if market_code=="MX"
