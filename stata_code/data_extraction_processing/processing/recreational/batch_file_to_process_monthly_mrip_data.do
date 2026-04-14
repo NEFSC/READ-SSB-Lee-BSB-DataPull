@@ -28,7 +28,7 @@ global my_datadir "${my_projdir}/data_folder"
 global data_raw "${workdir}/raw"
 
 
-global workdir "C:\Users\min-yang.lee\Desktop\BSB"
+global workdir "${my_projdir}"
 global my_outputdir "${workdir}\data_folder\main"
 global my_codedir "${workdir}\stata_code"
 
