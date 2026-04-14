@@ -100,8 +100,8 @@ Rstudio users using projects don't have to do this step.
 
 # Domain Reference
 
-1. Species codes use itis, Black Sea Bass is 167687.
-2. Gear codes (negear) are binned into gear groups.
+There are a handful of domain specific codes that are used. It would be better to pull them from the Oracle lookup tables, but I didn't do that because this felt like a one-off project. This section documents domain-specific codes used throughout the codebase.
+These codes appear in filtering and data-cleaning logic across 15+ files.
 
 ## Species Codes (ITIS TSN)
 
