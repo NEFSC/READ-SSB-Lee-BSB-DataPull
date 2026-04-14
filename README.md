@@ -98,6 +98,71 @@ do $my_project_name
 Rstudio users using projects don't have to do this step.
 
 
+## Execution Guide
+
+### Prerequisites
+
+Before running any code, ensure the following are in place:
+
+- **Stata 15.1 or later**
+- **ODBC connection** to NEFSC/GARFO Oracle databases (requires Oracle client
+  with ODBC drivers and NEFSC network access or on VPN)
+- **Database credentials** stored in your `profile.do` as
+  `$myNEFSC_USERS_conn` (see [Data, Oracle, passwords](#data-oracle-passwords-and-other-confidential-information))
+- **FRED API access** for `extract_data_from_FRED.do` (requires internet access, a freely obtained FRED API key, setting that API in stata with ``set fredkey``)
+- **MRIP raw data files** in `$data_raw` — files named `catch_${year}*.dta`,
+  `trip_${year}*.dta`, `size_b2_${year}*.dta` (required only for Step 3)
+  [TO DOCUMENT: add source/download instructions for MRIP data preparation]
+- **Custom ado file** `vintage_lookup_and_reset.ado` — already included in
+  `stata_code/ado/`; loaded automatically by `folder_setup_globals.do`
+
+### Execution Sequence
+
+```
+STEP 0 — Setup (required before anything else)
+  do stata_code/project_logistics/folder_setup_globals.do
+  Sets all directory globals and the vintage date string.
+
+STEP 1 — Commercial data extraction (run 1A and 1B; order between them
+          does not matter, but both must finish before Step 2)
+  1A. do stata_code/data_extraction_processing/extraction/commercial/00_cams_extraction.do
+      Pulls CAMS landings, subtrip, and orphan records (1996–present).
+      Runtime: 1–2 hours.
+  1B. do stata_code/data_extraction_processing/extraction/commercial/01_extraction_wrapper.do
+      Pulls all other commercial data (15 scripts: permits, dealers,
+      transactions, gear, locations, FRED deflators, etc.).
+      Runtime: 30–60 minutes.
+
+STEP 2 — Exploratory analysis (requires Step 1B outputs)
+  *** FIRST: open 00_exploratory_analysis_wrapper.do and update the
+      global in_string on line 1 to match the vintage string from your
+      Step 1 extraction run (format: YYYY_MM_DD). ***
+  do stata_code/analysis/00_exploratory_analysis_wrapper.do
+  Produces 70+ exploratory graphs in images/exploratory/.
+  Runtime: 10–20 minutes.
+
+STEP 3 — Recreational data processing (independent of Steps 1–2)
+  Ensure MRIP raw files are in $data_raw before running.
+  do stata_code/data_extraction_processing/processing/recreational/batch_file_to_process_monthly_mrip_data.do
+```
+
+### Orphaned Files (not part of the standard workflow)
+
+These files exist in the repository but are **not called by any wrapper**:
+
+- `stata_code/data_extraction_processing/processing/recreational/domain_catch_frequencies_gom_month.do` —
+  experimental/deprecated; the call in the batch file is commented out
+- `stata_code/data_extraction_processing/extraction/commercial/tack_on_captains_and_ports.do` —
+  bridges data from an external "mobility" project; requires globals not
+  defined in this repo; safe to ignore for the core BSB pipeline
+
+### Known Issues and Manual Steps
+
+| Issue | File | Action Required |
+|-------|------|-----------------|
+| Hardcoded vintage string | `00_exploratory_analysis_wrapper.do` line 1 | Update `global in_string` to match your extraction run date before Step 2 |
+
+
 # Domain Reference
 
 There are a handful of domain specific codes that are used. It would be better to pull them from the Oracle lookup tables, but I didn't do that because this felt like a one-off project. This section documents domain-specific codes used throughout the codebase.
