@@ -20,6 +20,14 @@ In order to do a data update, you will need to:
 	Because there are relatively few observations in FY2020, we decided to use the annual length-frequency distribution. 
 	However, we will want to do catch per trip at either the wave or month level.
  */
+/* Raw MRIP input files required in $data_raw before running:
+     catch_${year}*.dta      — catch totals by species, mode, wave, state
+     trip_${year}*.dta       — trip-level records
+     size_b2_${year}*.dta    — length-frequency records (size class B2)
+   These are produced by converting MRIP public SAS files to Stata format
+   (see step 1 of the update instructions above).
+   [TO DOCUMENT: add link or instructions for MRIP data download/conversion]
+   The $data_raw global must point to the folder containing these files.   */
 #delimit cr
 	global my_projdir "V:/READ-SSB-Lee-MRIP-BLAST"
 	global mrip_estim_pub_2018 "A:/products/mrip_estim/Public_data_cal2018"
