@@ -98,19 +98,88 @@ do $my_project_name
 Rstudio users using projects don't have to do this step.
 
 
-# Domain specific codes
+# Domain Reference
 
-There are a handful of domain specific codes that are used. It would be better to pull them from the Oracle lookup tables, but I didn't do that because this felt like a one-off project.  Here is the list:
 1. Species codes use itis, Black Sea Bass is 167687.
 2. Gear codes (negear) are binned into gear groups.
 
+## Species Codes (ITIS TSN)
+
+| ITIS TSN | Common Name | Used In |
+|----------|-------------|---------|
+| 167687 | Black Sea Bass (*Centropristis striata*) | 12+ files (primary filter) |
+| 172735 | Summer Flounder | `sfbsb_daily.do` |
+
+> NESPP3 code for BSB: 335. [TO DOCUMENT: full NESPP3 list if needed]
+
+## Gear Codes (negear) — Category Mapping
+
+The `negear` field contains NEFSC gear codes. Analysis scripts bin these into
+five final categories. Source: `stata_code/analysis/bsb_exploratory.do` lines 53–92.
+
+| Category | negear values |
+|----------|--------------|
+| LineHand | 10, 20, 21, 30, 34, 40, 60, 62, 65, 66, 90, 220–230, 250, 251, 330, 340, 380, 410, 414, 420 |
+| Trawl | 50–59, 71, 150, 160, 170, 350, 351, 353, 370, 450 |
+| Gillnet | 100–117, 500, 520 |
+| PotTrap | 80, 140, 142, 180–212, 240, 260, 270, 300–301, 320, 322 (includes weirs and pounds) |
+| Misc | Dredge (381–383, 132, 400), Seine (70, 71, 120–124, 160, 360), Unknown (999) |
+
+> Dredge, Seine, and Unknown are first assigned their own categories, then
+> rebinned into `Misc`. The final analysis uses five categories: LineHand,
+> Trawl, Gillnet, PotTrap, Misc.
+
+## Market Category Codes
+
+BSB is sold in five size-based market categories. Raw dealer records contain
+additional codes that are rebinned during processing.
+Source: `stata_code/analysis/bsb_exploratory.do` lines 78–97.
+
+| Final Code | Final Description | Raw Codes Rebinned In |
+|-----------|------------------|-----------------------|
+| JB | Jumbo | JB, XG (Extra Large) |
+| LG | Large | LG |
+| MD | Medium | MD, Medium Or Select |
+| SQ | Small | SQ, PW (Pee Wee), ES (Extra Small) |
+| UN | Unclassified | UN, MX (Mixed or Unsized) |
+
+>The stock assessment uses "SMALL.COMB" for Small Combined.
+
+> The Unclassified category (5–10% of landings 2020–2023) is the focus
+> of the stock assessment price-prediction work.
+
+## Permit Type Codes
+
+Used in `commercial_BSB.do` and `bsb_vessel_explorations.do` to distinguish
+state-permitted from federally-permitted vessels.
+
+| Permit Value | Type | Notes |
+|-------------|------|-------|
+| 000000 | State (no federal permit) | CAMSID constructed from permit+hullid+dealer fields; excluded from apportionment |
+| 190998 | Vessel size class A| Dropped from vessel-level analysis |
+| 290998 | Vessel size class B| Dropped from vessel-level analysis |
+| 390998 | vessel size class C| Dropped from vessel-level analysis |
+| 490998 | vessel size class D| Dropped from vessel-level analysis |
+| All others | Federal | 6-digit federal permit number |
+
+>The 998 permits correspond to vessels with an unknown/no permit, but in a particular size bin.
 
 
-### 1. **HIGH SEVERITY** - Undocumented Domain-Specific Codes
-- **Files affected:** 15+ files
-- **Issue:** Species codes (167687=BSB), 40+ gear codes (negear), market categories, permit types, and status codes are used extensively but never defined in a central reference
-- **Impact:** New users cannot understand filtering logic, data cleaning decisions, or regulatory context without external domain knowledge
-- **Line references:** bsb_exploratory.do:53-92 (gear mapping), bsb_transactions.do:19 (species code), bsb_vessel_explorations.do:33 (permit codes)
+## Dealer/Trip Match Status Codes
+
+The `status` field in CAMS records describes how dealer (CFDERS) and vessel
+trip (VTR) records were matched.
+Source: `stata_code/analysis/bsb_exploratory_dealers.do` lines 155–171.
+
+| Status Code | Meaning |
+|------------|---------|
+| MATCH | Records fully match at the CAMSID–ITIS_GROUP1 level |
+| DLR_ORPHAN_SPECIES | Matching CAMSID but ITIS_GROUP1 in CFDERS does not appear on the VTR |
+| DLR_ORPHAN_TRIP | Dealer trip with no matching VTR trip |
+| VTR_ORPHAN_SPECIES | Matching CAMSID but ITIS_GROUP1 on VTR does not appear in CFDERS |
+| VTR_ORPHAN_TRIP | VTR trip with no matching trip in CFDERS |
+| VTR_NOT_SOLD | VTR record for bait/home consumption; not sold to dealer; not in CFDERS |
+| PZERO | PERMIT = '000000'; excluded from apportionment and imputation |
 
 
 
