@@ -54,9 +54,11 @@ Your life will be easier if you organize things into a BSB_mega_folder because t
 BSB_mega_folder/
 ├── READ-SSB-Lee-BSB-DataPull/  #Data pull, explore, background. 
 │   ├── data_folder/              # Shared data
-│ 	  ├── data_raw/	   
-│ 	  ├── data_external/
-│ 	  └── data_main/
+│ 	  ├── raw/	   
+│ 	  ├── external/
+│ 	  └── internal/
+│ 	  ├── intermediate/
+│ 	  └── main/
 │   ├── R_code/
 │   ├── stata_code/
 │   └──more stuff/
@@ -82,15 +84,39 @@ BSB_mega_folder/
 ```
 
 
+## Running stata code in this project.  
 
-I keep each project in a separate folder.  A stata do file containing folder names get stored as a macro in stata's startup profile.do.  This lets me start working on any of my projects by opening stata and typing: 
+Add this line of code to the ``profile.do`` that is executed on Stata's startup
+```
+global my_project_name "full/path/to/stata_code/project_logisitics/folder_setup_globals.do"
+
+```
+A stata do file containing folder names get stored as a macro in stata's startup profile.do.  This lets me start working on any of my projects by opening stata and typing: 
 ```
 do $my_project_name
 ```
 Rstudio users using projects don't have to do this step.
 
 
-# On passwords and other confidential information
+# Domain specific codes
+
+There are a handful of domain specific codes that are used. It would be better to pull them from the Oracle lookup tables, but I didn't do that because this felt like a one-off project.  Here is the list:
+1. Species codes use itis, Black Sea Bass is 167687.
+2. Gear codes (negear) are binned into gear groups.
+
+
+
+### 1. **HIGH SEVERITY** - Undocumented Domain-Specific Codes
+- **Files affected:** 15+ files
+- **Issue:** Species codes (167687=BSB), 40+ gear codes (negear), market categories, permit types, and status codes are used extensively but never defined in a central reference
+- **Impact:** New users cannot understand filtering logic, data cleaning decisions, or regulatory context without external domain knowledge
+- **Line references:** bsb_exploratory.do:53-92 (gear mapping), bsb_transactions.do:19 (species code), bsb_vessel_explorations.do:33 (permit codes)
+
+
+
+# Data, Oracle, passwords and other confidential information
+
+In order to run this code, you need to be able to ``select`` on various NEFSC oracle tables.  For stata, you will need to assemble an oracle connection string into the global ``myNEFSC_USERS_conn.``  The best way to do that is to assemble that in your ``.profile.do`` that is run on startup. 
 
 Basically, you will want to store them in a place that does not get uploaded to github. 
 
@@ -108,7 +134,7 @@ This repository is a scientific product and is not official communication of the
 1. what the project does: Black Sea bass related projects
 1. why the project is useful:  Black Sea bass is awesome
 1. how users can get started with the project: Download and follow the readme
-1. where users can get help with your project:  email me or open an issue
+1. where users can get help with your project:  email at Min-Yang.Lee@noaa.gov or open an issue
 1. who maintains and contributes to the project. Min-Yang
 
 # License file
