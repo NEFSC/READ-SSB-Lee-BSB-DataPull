@@ -41,7 +41,7 @@ portlnd_query <- glue(
 )
 
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 portlnd1 <- dbGetQuery(nova_conn, portlnd_query)
 

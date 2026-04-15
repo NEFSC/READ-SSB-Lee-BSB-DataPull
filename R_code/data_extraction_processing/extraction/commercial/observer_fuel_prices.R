@@ -46,7 +46,7 @@ fuel_query <- glue(
 )
 
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 fuel_raw <- dbGetQuery(nova_conn, fuel_query)
 

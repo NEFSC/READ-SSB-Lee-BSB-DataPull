@@ -25,7 +25,7 @@ vintage_string <- format(Sys.Date())
 
 
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 cams_gears <- dbGetQuery(nova_conn, "select * from cams_garfo.cfg_negear")
 

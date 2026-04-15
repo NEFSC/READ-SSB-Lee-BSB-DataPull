@@ -75,7 +75,7 @@ landings_query <- glue(
 )
 
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 bsb_sizes      <- dbGetQuery(nova_conn, sizes_query)
 daily_landings <- dbGetQuery(nova_conn, landings_query)

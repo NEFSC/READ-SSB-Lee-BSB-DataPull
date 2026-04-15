@@ -66,11 +66,11 @@ sql_query <- glue(
      and cl.rec = 0"
 )
 
-# Establish Oracle connection.  Credentials (id, novapw, nefscusers.connect.string)
+# Establish Oracle connection.  
 # should be available in the session via keyring or .Rprofile.
 # See documentation/project_logistics.md for credential setup instructions.
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 landings_all <- dbGetQuery(nova_conn, sql_query)
 

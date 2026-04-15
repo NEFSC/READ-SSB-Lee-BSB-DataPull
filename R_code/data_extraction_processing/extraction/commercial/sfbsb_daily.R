@@ -42,7 +42,7 @@ daily_query <- glue(
 )
 
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 daily <- dbGetQuery(nova_conn, daily_query)
 

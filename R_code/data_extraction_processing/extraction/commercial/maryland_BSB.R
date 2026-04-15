@@ -10,8 +10,6 @@
 #          commercial/maryland_BSB.do
 #          Maryland has a 50 lb open-access possession limit for BSB and up
 #          to 14 landings permits.  Trips under the threshold are excluded.
-# Author:
-# Date:
 # =============================================================================
 
 library("ROracle")
@@ -53,7 +51,7 @@ md_query <- glue(
 )
 
 drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 
 md_landings <- dbGetQuery(nova_conn, md_query)
 
