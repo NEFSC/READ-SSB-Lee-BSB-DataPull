@@ -35,7 +35,7 @@ gen price=value/livlb;
 
 save "${data_main}\commercial\landings_all_${vintage_string}.dta", replace;
 
-merge m:1 itis_tsn grade_code market_code using "${data_raw}\commercial\bsb_sizes_${vintage_string}.dta", keep(1 3);
+merge m:1 itis_tsn grade_code market_code using "${data_main}\commercial\bsb_sizes_${vintage_string}.dta", keep(1 3);
 
 rename _merge merge_species_codes;
 
