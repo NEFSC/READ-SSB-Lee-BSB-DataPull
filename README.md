@@ -54,9 +54,11 @@ Your life will be easier if you organize things into a BSB_mega_folder because t
 BSB_mega_folder/
 ├── READ-SSB-Lee-BSB-DataPull/  #Data pull, explore, background. 
 │   ├── data_folder/              # Shared data
-│ 	  ├── data_raw/	   
-│ 	  ├── data_external/
-│ 	  └── data_main/
+│ 	  ├── raw/	   
+│ 	  ├── external/
+│ 	  └── internal/
+│ 	  ├── intermediate/
+│ 	  └── main/
 │   ├── R_code/
 │   ├── stata_code/
 │   └──more stuff/
@@ -82,15 +84,180 @@ BSB_mega_folder/
 ```
 
 
+## Running stata code in this project.  
 
-I keep each project in a separate folder.  A stata do file containing folder names get stored as a macro in stata's startup profile.do.  This lets me start working on any of my projects by opening stata and typing: 
+Add this line of code to the ``profile.do`` that is executed on Stata's startup
+```
+global my_project_name "full/path/to/stata_code/project_logisitics/folder_setup_globals.do"
+
+```
+A stata do file containing folder names get stored as a macro in stata's startup profile.do.  This lets me start working on any of my projects by opening stata and typing: 
 ```
 do $my_project_name
 ```
 Rstudio users using projects don't have to do this step.
 
 
-# On passwords and other confidential information
+## Execution Guide
+
+### Prerequisites
+
+Before running any code, ensure the following are in place:
+
+- **Stata 15.1 or later**
+- **ODBC connection** to NEFSC/GARFO Oracle databases (requires Oracle client
+  with ODBC drivers and NEFSC network access or on VPN)
+- **Database credentials** stored in your `profile.do` as
+  `$myNEFSC_USERS_conn` (see [Data, Oracle, passwords](#data-oracle-passwords-and-other-confidential-information))
+- **FRED API access** for `extract_data_from_FRED.do` (requires internet access, a freely obtained FRED API key, setting that API in stata with ``set fredkey``)
+- **MRIP raw data files** in `$data_raw` — files named `catch_${year}*.dta`,
+  `trip_${year}*.dta`, `size_b2_${year}*.dta` (required only for Step 3)
+  [TO DOCUMENT: add source/download instructions for MRIP data preparation]
+- **Custom ado file** `vintage_lookup_and_reset.ado` — already included in
+  `stata_code/ado/`; loaded automatically by `folder_setup_globals.do`
+
+### Execution Sequence
+
+```
+STEP 0 — Setup (required before anything else)
+  do stata_code/project_logistics/folder_setup_globals.do
+  Sets all directory globals and the vintage date string.
+
+STEP 1 — Commercial data extraction (run 1A and 1B; order between them
+          does not matter, but both must finish before Step 2)
+  1A. do stata_code/data_extraction_processing/extraction/commercial/00_cams_extraction.do
+      Pulls CAMS landings, subtrip, and orphan records (1996–present).
+      Runtime: 1–2 hours.
+  1B. do stata_code/data_extraction_processing/extraction/commercial/01_extraction_wrapper.do
+      Pulls all other commercial data (15 scripts: permits, dealers,
+      transactions, gear, locations, FRED deflators, etc.).
+      Runtime: 30–60 minutes.
+
+STEP 2 — Exploratory analysis (requires Step 1B outputs)
+  *** FIRST: open 00_exploratory_analysis_wrapper.do and update the
+      global in_string on line 1 to match the vintage string from your
+      Step 1 extraction run (format: YYYY_MM_DD). ***
+  do stata_code/analysis/00_exploratory_analysis_wrapper.do
+  Produces 70+ exploratory graphs in images/exploratory/.
+  Runtime: 10–20 minutes.
+
+STEP 3 — Recreational data processing (independent of Steps 1–2)
+  Ensure MRIP raw files are in $data_raw before running.
+  do stata_code/data_extraction_processing/processing/recreational/batch_file_to_process_monthly_mrip_data.do
+```
+
+### Orphaned Files (not part of the standard workflow)
+
+These files exist in the repository but are **not called by any wrapper**:
+
+- `stata_code/data_extraction_processing/processing/recreational/domain_catch_frequencies_gom_month.do` —
+  experimental/deprecated; the call in the batch file is commented out
+- `stata_code/data_extraction_processing/extraction/commercial/tack_on_captains_and_ports.do` —
+  bridges data from an external "mobility" project; requires globals not
+  defined in this repo; safe to ignore for the core BSB pipeline
+
+### Known Issues and Manual Steps
+
+| Issue | File | Action Required |
+|-------|------|-----------------|
+| Hardcoded vintage string | `00_exploratory_analysis_wrapper.do` line 1 | Update `global in_string` to match your extraction run date before Step 2 |
+
+
+# Domain Reference
+
+There are a handful of domain specific codes that are used. It would be better to pull them from the Oracle lookup tables, but I didn't do that because this felt like a one-off project. This section documents domain-specific codes used throughout the codebase.
+These codes appear in filtering and data-cleaning logic across 15+ files.
+
+## Species Codes (ITIS TSN)
+
+| ITIS TSN | Common Name | Used In |
+|----------|-------------|---------|
+| 167687 | Black Sea Bass (*Centropristis striata*) | 12+ files (primary filter) |
+| 172735 | Summer Flounder | `sfbsb_daily.do` |
+
+> NESPP3 code for BSB: 335. [TO DOCUMENT: full NESPP3 list if needed]
+
+## Gear Codes (negear) — Category Mapping
+
+The `negear` field contains NEFSC gear codes. Analysis scripts bin these into
+five final categories. Source: `stata_code/analysis/bsb_exploratory.do` lines 53–92.
+
+| Category | negear values |
+|----------|--------------|
+| LineHand | 10, 20, 21, 30, 34, 40, 60, 62, 65, 66, 90, 220–230, 250, 251, 330, 340, 380, 410, 414, 420 |
+| Trawl | 50–59, 71, 150, 160, 170, 350, 351, 353, 370, 450 |
+| Gillnet | 100–117, 500, 520 |
+| PotTrap | 80, 140, 142, 180–212, 240, 260, 270, 300–301, 320, 322 (includes weirs and pounds) |
+| Misc | Dredge (381–383, 132, 400), Seine (70, 71, 120–124, 160, 360), Unknown (999) |
+
+> Dredge, Seine, and Unknown are first assigned their own categories, then
+> rebinned into `Misc`. The final analysis uses five categories: LineHand,
+> Trawl, Gillnet, PotTrap, Misc.
+
+> Gear and market category definitions are embedded directly in the
+> analysis scripts. `stata_code/analysis/bsb_exploratory.do` is the
+> primary reference (lines 53–97). The same logic appears in
+> `prices_by_category.do` (market rebinning only) and
+> `bsb_exploratory_dealers.do` (market rebinning, with Pee Wee kept
+> as Extra Small rather than folded into Small).
+
+## Market Category Codes
+
+BSB is sold in five size-based market categories. Raw dealer records contain
+additional codes that are rebinned during processing.
+Source: `stata_code/analysis/bsb_exploratory.do` lines 78–97.
+
+| Final Code | Final Description | Raw Codes Rebinned In |
+|-----------|------------------|-----------------------|
+| JB | Jumbo | JB, XG (Extra Large) |
+| LG | Large | LG |
+| MD | Medium | MD, Medium Or Select |
+| SQ | Small | SQ, PW (Pee Wee), ES (Extra Small) |
+| UN | Unclassified | UN, MX (Mixed or Unsized) |
+
+>The stock assessment uses "SMALL.COMB" for Small Combined.
+
+> The Unclassified category (5–10% of landings 2020–2023) is the focus
+> of the stock assessment price-prediction work.
+
+## Permit Type Codes
+
+Used in `commercial_BSB.do` and `bsb_vessel_explorations.do` to distinguish
+state-permitted from federally-permitted vessels.
+
+| Permit Value | Type | Notes |
+|-------------|------|-------|
+| 000000 | State (no federal permit) | CAMSID constructed from permit+hullid+dealer fields; excluded from apportionment |
+| 190998 | Vessel size class A| Dropped from vessel-level analysis |
+| 290998 | Vessel size class B| Dropped from vessel-level analysis |
+| 390998 | vessel size class C| Dropped from vessel-level analysis |
+| 490998 | vessel size class D| Dropped from vessel-level analysis |
+| All others | Federal | 6-digit federal permit number |
+
+>The 998 permits correspond to vessels with an unknown/no permit, but in a particular size bin.
+
+
+## Dealer/Trip Match Status Codes
+
+The `status` field in CAMS records describes how dealer (CFDERS) and vessel
+trip (VTR) records were matched.
+Source: `stata_code/analysis/bsb_exploratory_dealers.do` lines 155–171.
+
+| Status Code | Meaning |
+|------------|---------|
+| MATCH | Records fully match at the CAMSID–ITIS_GROUP1 level |
+| DLR_ORPHAN_SPECIES | Matching CAMSID but ITIS_GROUP1 in CFDERS does not appear on the VTR |
+| DLR_ORPHAN_TRIP | Dealer trip with no matching VTR trip |
+| VTR_ORPHAN_SPECIES | Matching CAMSID but ITIS_GROUP1 on VTR does not appear in CFDERS |
+| VTR_ORPHAN_TRIP | VTR trip with no matching trip in CFDERS |
+| VTR_NOT_SOLD | VTR record for bait/home consumption; not sold to dealer; not in CFDERS |
+| PZERO | PERMIT = '000000'; excluded from apportionment and imputation |
+
+
+
+# Data, Oracle, passwords and other confidential information
+
+In order to run this code, you need to be able to ``select`` on various NEFSC oracle tables.  For stata, you will need to assemble an oracle connection string into the global ``myNEFSC_USERS_conn.``  The best way to do that is to assemble that in your ``.profile.do`` that is run on startup. 
 
 Basically, you will want to store them in a place that does not get uploaded to github. 
 
@@ -108,7 +275,7 @@ This repository is a scientific product and is not official communication of the
 1. what the project does: Black Sea bass related projects
 1. why the project is useful:  Black Sea bass is awesome
 1. how users can get started with the project: Download and follow the readme
-1. where users can get help with your project:  email me or open an issue
+1. where users can get help with your project:  email at Min-Yang.Lee@noaa.gov or open an issue
 1. who maintains and contributes to the project. Min-Yang
 
 # License file

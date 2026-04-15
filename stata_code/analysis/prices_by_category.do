@@ -19,8 +19,14 @@ replace dlr_date=dofc(dlr_date)
 format dlr_date %td
 
 
-/* rebin Mixed or unsized to unclassified 
-rebin pee wee to extra small */ 
+/* -------------------------------------------------------------------
+   MARKET CATEGORY REBINNING
+   Standardizes raw dealer market codes into 5 analysis categories.
+   Rules: MX (Mixed/Unsized) -> UN (Unclassified)
+          PW (Pee Wee) + ES (Extra Small) -> SQ (Small)
+   Full code table in README. Logic also in bsb_exploratory.do and
+   bsb_exploratory_dealers.do — update all three if rules change.
+   ------------------------------------------------------------------- */
 
 replace market_desc="UNCLASSIFIED" if market_desc=="MIXED OR UNSIZED"
 replace market_code="UN" if market_code=="MX"

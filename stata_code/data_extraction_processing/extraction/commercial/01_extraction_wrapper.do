@@ -1,6 +1,10 @@
 ********************************************************************************
-* Black Sea bass extraction wrapper 
+* Black Sea bass extraction wrapper
 * Purpose: 	wrapper to get data for the prices in stock assessment project
+* Step 1B in the execution sequence — run after folder_setup_globals.do.
+* Requires: ODBC connection to NEFSC/GARFO Oracle databases.
+* Outputs:  17 datasets in data_folder/main/commercial/
+* See README.md ## Execution Guide for full prerequisites and run order.
 ********************************************************************************
 /*
 These are a bit meandering.  There's lots of little one-off investigations.
