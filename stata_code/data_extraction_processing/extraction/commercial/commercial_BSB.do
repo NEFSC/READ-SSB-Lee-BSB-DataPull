@@ -35,7 +35,7 @@ save ${data_main}\commercial\yearly_landings_by_type_${vintage_string}.dta, repl
 /* select trip level landings of all species from trips that had at least 100lbs of black sea bass landings */
 local sql "select sum(lndlb) as landings, sum(value) as value, year, state, itis_tsn, itis_group1 from cams_garfo.cams_land where camsid in (
 	select distinct camsid from (
-		select camsid, sum(lndlb) as landings from cams_land where itis_tsn=167687 and rec=0 group by camsid)
+		select camsid, sum(lndlb) as landings from cams_garfo.cams_land where itis_tsn=167687 and rec=0 group by camsid)
 	where landings>100
 )
      group by year, state, itis_tsn, itis_group1";
