@@ -4,7 +4,7 @@
 #          CAMS/GARFO Oracle databases, compute price per live-weight pound,
 #          and merge in species/market-category metadata.
 # Inputs:  Oracle: cams_garfo.cams_land, cams_garfo.cams_subtrip (live query)
-#          File:   data_folder/main/commercial/bsb_sizes.Rds
+#          File:   data_folder/main/commercial/bsb_sizes_{vintage_string}.Rds
 #                  (grade/market keyfile; produced by bsb_price_categories.R)
 # Outputs: data_folder/main/commercial/landings_all_{vintage_string}.Rds
 #          Transaction-level BSB commercial landings with prices and
@@ -135,7 +135,8 @@ landings_all <- landings_all %>%
 # Fields added: nespp4, grade_desc, market_desc, cf_lndlb_livlb.
 #
 
-bsb_sizes <- readRDS(here("data_folder", "main", "commercial", "bsb_sizes.Rds"))
+bsb_sizes <- readRDS(here("data_folder", "main", "commercial",
+                          glue("bsb_sizes_{vintage_string}.Rds")))
 
 # Ensure join keys are character in the lookup table, matching landings_all.
 bsb_sizes <- bsb_sizes %>%
