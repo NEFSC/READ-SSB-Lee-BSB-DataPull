@@ -5,8 +5,8 @@
 # File:   input_path  <- here("data_folder", "main", "commercial")
 # input_path <- glue("landings_all_{vintage_string}.Rds")
 # input_path <- file.path(output_dir, input_path)
-# Author:
-# Date:
+# landings_all<-readRDS(file = input_path)
+# created by bsb_transactions.R
 # =============================================================================
 
 library("ROracle")
