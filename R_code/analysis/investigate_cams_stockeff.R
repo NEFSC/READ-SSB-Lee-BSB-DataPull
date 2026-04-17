@@ -62,6 +62,28 @@ input_path <- file.path(input_path, input_file)
 
 landings_all<-readRDS(file = input_path)
 
+landings_all <- landings_all %>%
+  mutate(
+    stockarea = case_when(
+      area >= 621 & area<=640 ~ "SOUTH",
+      area %in% c(614, 615)   ~ "SOUTH",
+      area == 616              ~ "NORTH",
+      area <= 613           ~ "NORTH",
+      area==0 ~ "UNK",
+      .default = "UNK"
+    )
+  )
+
+  
+
 aggregated_landings<-landings_all %>%
-  group_by(year) %>%
+
+  group_by(year,stockarea) %>%
   summarise(livkg=sum(livlb/2.204))
+
+
+output_dir  <- here("data_folder", "main", "commercial")
+output_file <- glue("aggregated_landings_cams_check{vintage_string}.Rds")
+output_path <- file.path(output_dir, output_file)
+
+saveRDS(aggregated_landings, file = output_path)
