@@ -52,7 +52,7 @@ odbc load, exec("`sql';") $myNEFSC_USERS_conn;
 save ${data_main}\commercial\subtrip_landings_${vintage_string}.dta, replace ;
 
 
-collapse (sum) landings value, by(itis_tsn year itis_group);
+collapse (sum) landings value, by(itis_tsn year itis_group1);
 
 format year %4.0f;
 sort year value;
