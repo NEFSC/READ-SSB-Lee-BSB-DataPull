@@ -14,25 +14,14 @@
 #          images/exploratory/cams_veslog_hails_{state}.png  (one per state)
 # Notes:   Ported from stata_code/analysis/bsb_cams_match_coverage.do
 #          in_string must be set before sourcing (via wrapper or manually).
-# Author:
-# Date:
 # =============================================================================
 
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/analysis/bsb_cams_match_coverage.R")
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
 
 if (!exists("in_string")) {
   stop("'in_string' not defined. Run via 00_exploratory_analysis_wrapper.R or set in_string manually.")
 }
 
-img_dir <- file.path(my_images, "exploratory")
+img_dir <- here("images", "exploratory","Rported")
 if (!dir.exists(img_dir)) dir.create(img_dir, recursive = TRUE)
 
 atlantic_states <- c("CT", "DE", "MA", "MD", "NC", "NJ", "NY", "RI", "VA")
@@ -43,7 +32,7 @@ atlantic_states <- c("CT", "DE", "MA", "MD", "NC", "NJ", "NY", "RI", "VA")
 # =============================================================================
 
 landings_raw <- readRDS(
-  file.path(data_main, "commercial", glue("landings_all_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("landings_all_{in_string}.Rds"))
 )
 
 landings <- landings_raw %>%
@@ -122,7 +111,7 @@ message("Saved: cams_match.png")
 # =============================================================================
 
 veslog_annual <- readRDS(
-  file.path(data_main, "commercial", glue("veslog_annual_landings_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("veslog_annual_landings_{in_string}.Rds"))
 )
 
 # Reshape wide: one column for matched, one for unmatched landings
@@ -177,7 +166,7 @@ message("Saved: cams_veslog_hails.png")
 # =============================================================================
 
 veslog_state <- readRDS(
-  file.path(data_main, "commercial", glue("veslog_annual_state_landings_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("veslog_annual_state_landings_{in_string}.Rds"))
 )
 
 cams_wide_state <- cams_states %>%
