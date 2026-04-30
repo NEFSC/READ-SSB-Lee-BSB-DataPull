@@ -13,26 +13,15 @@
 #          Stata uses tsfill + reshape wide + graph bar for stacked bars;
 #          R uses tidyr::complete() + ggplot2::geom_col(position="stack").
 #          Top-25 selected by all-time vessel total (matching Stata bysort-tl logic).
-# Author:
-# Date:
 # =============================================================================
 
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/analysis/bsb_vessel_explorations.R")
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
 
 if (!exists("in_string")) {
   stop("'in_string' not defined. Run via 00_exploratory_analysis_wrapper.R or set in_string manually.")
 }
-
-img_dir <- file.path(my_images, "exploratory")
+img_dir <- here("images", "exploratory","Rported")
 if (!dir.exists(img_dir)) dir.create(img_dir, recursive = TRUE)
+
 
 # Placeholder hullids to exclude (Stata: multiple drop if inlist(hullid, ...))
 bad_hullids <- c(
@@ -50,7 +39,7 @@ atlantic_states <- c("CT", "DE", "MA", "MD", "NC", "NJ", "NY", "RI", "VA")
 # =============================================================================
 
 landings_raw <- readRDS(
-  file.path(data_main, "commercial", glue("landings_all_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("landings_all_{in_string}.Rds"))
 )
 
 landings <- landings_raw %>%
@@ -99,8 +88,12 @@ top25_by_id <- function(df, id_col) {
 # =============================================================================
 
 stacked_bar <- function(df, id_col, title_str) {
+  n_ids <- n_distinct(df[[id_col]])
+  pal   <- unname(pals::polychrome(max(n_ids, 2)))  # polychrome min is 2
+  
   ggplot(df, aes(x = factor(year), y = lndlb, fill = .data[[id_col]])) +
     geom_col() +
+    scale_fill_manual(values = pal) +
     labs(
       x     = "Year",
       y     = "Landings (000s lbs)",
