@@ -94,7 +94,7 @@ collapse (sum) landings value, by(year week mym keep)
 gen weekly_date=yw(year, week)
 format weekly_date %tw
 gen price=value/landings
-tsset my weekly_date
+tsset mym weekly_date
 xtline price if keep==1 & price<=10
 
 /* The weekly black sea bass price series looks pretty nicely behaved. 
