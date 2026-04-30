@@ -318,7 +318,7 @@ preserve
 collapse (sum) lndlb livlb, by(market_desc)
 browse
 egen t=total(lndlb)
-gen frac=lnd/t
+gen frac=lndlb/t
 gsort - frac
 list market_desc frac
 restore
@@ -358,7 +358,7 @@ gen large_trip =tl>=.050
 collapse (sum)lndlb, by(large_trip)
 egen t=total(lndlb)
 gen frac=lndlb/t
-list large lndlb frac
+list large_trip lndlb frac
 /* However well over 95% of total landings are on "large" trips */
 
 restore
@@ -517,7 +517,7 @@ drop if inlist(state_string, "CN","FL","ME", "NH","PA","SC")
 bysort year: egen tyl=total(lndlb)
 gen fracy=lndlb/tyl
 
-bysort year state: egen tyls=total(lndlb)
+bysort year state_string: egen tyls=total(lndlb)
 gen frac=lndlb/tyls
 
 
@@ -588,14 +588,14 @@ restore
 
 
 /* time series of prices by state */
-collapse (sum) lndlb value valueR, by(state_string state market_desc year)
+collapse (sum) lndlb value valueR_CPI, by(state_string state market_desc year)
 drop if inlist(state_string, "CN","FL","ME", "NH","PA","SC")
 
 bysort state_string: egen tl=total(lndlb)
 gen frac=lndlb/tl
 gen price=value/(lndlb*1000)
 
-gen priceR_CPI=valueR/(lndlb*1000)
+gen priceR_CPI=valueR_CPI/(lndlb*1000)
 
 
 levelsof state_string, local(state_names)
@@ -620,12 +620,12 @@ foreach l of local state_names{
 
 
 
-collapse (sum) lndlb value valueR, by(state market_desc year)
+collapse (sum) lndlb value valueR_CPI, by(state market_desc year)
 
 
 
 gen price=value/(lndlb*1000)
-gen priceR_CPI=valueR/(lndlb*1000)
+gen priceR_CPI=valueR_CPI/(lndlb*1000)
 
 levelsof market_desc, local(sizes)
 
