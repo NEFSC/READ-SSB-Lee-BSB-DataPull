@@ -13,7 +13,7 @@
 /* state patterns of landings */
 
 use  "${data_main}\commercial\weekly_landings_${in_string}.dta", replace
-
+decode mys, gen(state)
 graph box landings, over(weekly_date)
 
 
