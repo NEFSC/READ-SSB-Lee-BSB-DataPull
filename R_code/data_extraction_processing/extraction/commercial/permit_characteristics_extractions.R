@@ -150,9 +150,7 @@ vessel_query <- glue(
    where ap_year between 1996 and {last_yr}
    order by vp_num, ap_num"
 )
-
-drv       <- dbDriver("Oracle")
-nova_conn <- dbConnect(drv, id, password = novapw, dbname = nefscusers.connect.string)
+nova_conn <- eval(nefscdb_con)
 vessel_raw <- dbGetQuery(nova_conn, vessel_query)
 dbDisconnect(nova_conn)
 
