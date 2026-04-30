@@ -9,23 +9,7 @@
 # Notes:   Ported from stata_code/data_extraction_processing/extraction/
 #          commercial/bsb_locations.do
 #          Weighted averages are computed in SQL to avoid pulling row-level data.
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/bsb_locations.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 
 # Weighted mean lat/lon uses landed pounds (lndlb) as weights, computed in SQL.

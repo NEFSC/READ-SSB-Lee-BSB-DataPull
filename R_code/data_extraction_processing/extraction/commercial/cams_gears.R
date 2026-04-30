@@ -9,20 +9,6 @@
 # Date:
 # =============================================================================
 
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/cams_gears.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
-
 
 drv       <- dbDriver("Oracle")
 nova_conn <- eval(nefscdb_con)
@@ -33,7 +19,12 @@ dbDisconnect(nova_conn)
 
 
 cams_gears <- cams_gears %>%
-  rename_with(tolower)
+  rename_with(tolower)%>%
+  mutate(negear=as.numeric(negear),
+         mesh_match=as.numeric(mesh_match),
+         accsp_category_code=as.numeric(accsp_category_code)
+
+)
 
 output_path <- here("data_folder", "main", "commercial",
                     glue("cams_gears_{vintage_string}.Rds"))

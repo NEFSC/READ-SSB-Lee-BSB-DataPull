@@ -12,26 +12,7 @@
 #          commercial/observer_fuel_prices.do
 #          "NK" is an unrecognized state code; dropped before aggregation.
 #          Output paths do not include a commercial/ subfolder, matching Stata.
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("lubridate")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(lubridate::year)
-conflicts_prefer(lubridate::month)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/observer_fuel_prices.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 
 # SQL uses an implicit join (comma syntax) between obtrp and port tables.

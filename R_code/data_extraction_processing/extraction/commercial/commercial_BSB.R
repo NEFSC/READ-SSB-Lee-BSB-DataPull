@@ -15,8 +15,6 @@
 #          commercial/commercial_BSB.do
 #          Permit codes: "000000" = state (no federal permit),
 #          "190998"/"290998"/"390998"/"490998" = vessel size classes A-D.
-# Author:
-# Date:
 # =============================================================================
 
 

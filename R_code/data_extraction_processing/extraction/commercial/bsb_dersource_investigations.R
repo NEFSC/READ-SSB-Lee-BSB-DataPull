@@ -13,23 +13,7 @@
 #          ITIS TSN 167687 used elsewhere.  cfders_all_years is a NEFSC dealer
 #          database table; the CAMS tables are not used here.
 #          No data file is saved (consistent with the Stata original).
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/bsb_dersource_investigations.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 
 # nespp3 = 335 is the NOAA Northeast Species/Product code for Black Sea Bass.

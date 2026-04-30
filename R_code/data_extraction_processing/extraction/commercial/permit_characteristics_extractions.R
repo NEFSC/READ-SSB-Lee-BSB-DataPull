@@ -16,23 +16,7 @@
 #          Fishing year j runs May 1 of year j through April 30 of year j+1.
 #          The Stata original saves permit_working to data_main but reads it
 #          back from data_raw — a path bug.  R port uses data_main throughout.
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/permit_characteristics_extractions.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 # Update last_yr each year to extend the extraction range.
 last_yr      <- 2025

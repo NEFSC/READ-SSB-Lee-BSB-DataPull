@@ -11,28 +11,7 @@
 #            Daily BSB landings by market category and grade, merged with keyfile.
 # Notes:   Ported from stata_code/data_extraction_processing/extraction/
 #          commercial/bsb_price_categories.do
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("lubridate")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(lubridate::year)
-conflicts_prefer(lubridate::month)
-conflicts_prefer(lubridate::week)
-conflicts_prefer(dplyr::summarise)
-conflicts_prefer(dplyr::arrange)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/bsb_price_categories.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 
 # =============================================================================

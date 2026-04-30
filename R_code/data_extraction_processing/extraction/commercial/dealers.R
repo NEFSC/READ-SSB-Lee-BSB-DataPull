@@ -10,24 +10,7 @@
 #            One row per dealer using the most recent year on record.
 # Notes:   Ported from stata_code/data_extraction_processing/extraction/
 #          commercial/dealers.do
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/dealers.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
-
 
 dealers_query <- glue(
   "select year, dnum, dlr, strt1, strt2, city, st, zip, doc

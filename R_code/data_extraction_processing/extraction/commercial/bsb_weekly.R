@@ -10,27 +10,7 @@
 #          The Stata script creates a weekly_date serial and calls tsset for
 #          time-series declaration; neither has a meaningful R equivalent and
 #          both are omitted.  year and week (integer) are retained instead.
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("lubridate")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(lubridate::year)
-conflicts_prefer(lubridate::week)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/bsb_weekly.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
-
 
 # SQL returns daily totals by date and state; R aggregates to weekly below.
 # 167687 = ITIS TSN for Black Sea Bass; rec = 0 = commercial.

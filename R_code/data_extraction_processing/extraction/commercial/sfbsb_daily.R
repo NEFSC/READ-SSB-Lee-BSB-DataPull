@@ -11,24 +11,6 @@
 # Author:
 # Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("lubridate")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(lubridate::year)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/sfbsb_daily.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
-
-
 daily_query <- glue(
   "select TO_CHAR(trunc(date_trip), 'MM-DD-YYYY') as date_trip_str,
           itis_tsn,

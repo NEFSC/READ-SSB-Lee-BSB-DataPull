@@ -13,23 +13,7 @@
 #          commercial/bsb_veslog.do
 #          species_id = 'BSB' is the VTR species code for Black Sea Bass.
 #          tripcatg in ('1','4') restricts to commercial fishing trips.
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/bsb_veslog.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 
 # SQL joins three VTR tables:

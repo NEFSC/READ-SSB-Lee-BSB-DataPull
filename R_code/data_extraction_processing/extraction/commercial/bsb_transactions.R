@@ -11,25 +11,7 @@
 #          market-category metadata. One row per dealer report record.
 # Notes:   Ported from stata_code/data_extraction_processing/extraction/
 #          commercial/bsb_transactions.do
-# Author:
-# Date:
 # =============================================================================
-
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-conflicts_prefer(dplyr::arrange)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/bsb_transactions.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
-
 
 # =============================================================================
 # Section 1: Oracle connection and data pull

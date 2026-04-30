@@ -7,23 +7,8 @@
 # Outputs: data_folder/main/commercial/vps_valid_fishery_{vintage_string}.Rds
 # Notes:   Ported from stata_code/data_extraction_processing/extraction/
 #          commercial/valid_fishery_extraction.do
-# Author:
-# Date:
 # =============================================================================
 
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/commercial/valid_fishery_extraction.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 # Update last_yr each year to extend the extraction range.
 # Stata equivalent: global lastyr 2025

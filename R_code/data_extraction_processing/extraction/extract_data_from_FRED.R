@@ -18,20 +18,6 @@
 # =============================================================================
 
 library("fredr")
-library("glue")
-library("tidyverse")
-library("lubridate")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(lubridate::year)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/data_extraction_processing/extraction/extract_data_from_FRED.R")
-
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
-
-vintage_string <- format(Sys.Date())
 
 # Set FRED API key.  Store key in environment or keyring — never hardcode.
 # Stata equivalent: set fredkey <key>
