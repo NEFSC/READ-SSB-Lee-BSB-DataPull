@@ -19,37 +19,7 @@ conflicts_prefer(dplyr::summarise)
 conflicts_prefer(dplyr::arrange)
 
 here::i_am("R_code/analysis/investigate_cams_stockeff.R")
-
-vintage_string <-"2026-04-15"
-
-# sql_query <- glue(
-#   "select st.docid, st.subtrip, st.area, st.negear, st.mesh_cat,
-#           st.record_sail, st.record_land, st.ves_len,
-#           cl.dlr_stid, cl.dlr_cflic, cl.camsid, cl.permit, cl.hullid,
-#           cl.year, cl.month, cl.week, cl.dlr_date,
-#           cl.dlr_mkt   as market_code,
-#           cl.dlr_grade as grade_code,
-#           cl.dlrid, cl.itis_tsn, cl.state, cl.port,
-#           cl.lndlb, cl.value, cl.livlb,
-#           cl.status, cl.dlr_source, cl.rec,
-#           st.lat_dd, st.lon_dd
-#    from cams_garfo.cams_land cl
-#    LEFT JOIN cams_garfo.cams_subtrip st
-#        on cl.camsid  = st.camsid
-#       and cl.subtrip = st.subtrip
-#    where cl.itis_tsn = '167687'
-#      and cl.rec = 0"
-# )
-
-# Establish Oracle connection.  
-# should be available in the session via keyring or .Rprofile.
-# See documentation/project_logistics.md for credential setup instructions.
-drv       <- dbDriver("Oracle")
-#nova_conn <- eval(nefscdb_con)
-
-
-#dbDisconnect(nova_conn)
-
+vintage_string <-"2026-04-30"
 
 # =============================================================================
 # Section 1: READ in results of bsb_transactions
@@ -62,13 +32,14 @@ input_path <- file.path(input_path, input_file)
 
 landings_all<-readRDS(file = input_path)
 
-landings_all <- landings_all %>%
+landings_all_classed <- landings_all %>%
   mutate(
-    stockarea = case_when(
-      area >= 621 & area<=640 ~ "SOUTH",
+    stock_abbrev = case_when(
+      area >= 621 & area<=639 ~ "SOUTH",
       area %in% c(614, 615)   ~ "SOUTH",
-      area == 616              ~ "NORTH",
-      area <= 613           ~ "NORTH",
+      area %in% c(464,465,467,468,510,511,512,513,514,515) ~ "NORTH",
+      area %in% c(520,521,522,523,524,525,526,530,533,534,537,538,539,541,542) ~ "NORTH",
+      area %in% c(543,551,552,560,561,562,611,612,613,616)~ "NORTH",
       area==0 ~ "UNK",
       .default = "UNK"
     )
@@ -76,9 +47,9 @@ landings_all <- landings_all %>%
 
   
 
-aggregated_landings<-landings_all %>%
+aggregated_landings<-landings_all_classed %>%
 
-  group_by(year,stockarea) %>%
+  group_by(year,stock_abbrev) %>%
   summarise(livkg=sum(livlb/2.204))
 
 
