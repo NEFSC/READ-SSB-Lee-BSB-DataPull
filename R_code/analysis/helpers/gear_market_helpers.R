@@ -37,7 +37,7 @@ apply_gear_categories <- function(df) {
     mutate(
       mygear = case_when(
         # LineHand (hooks, lines, rods, cast nets, weirs, handlines)
-        negear %in% c(10, 20, 21, 30, 34, 40, 60, 62, 65, 66,
+        negear %in% c(10, 20, 21, 22, 30, 34, 40, 60, 62, 65, 66,
                       90, 250, 251, 330, 340, 380, 410, 414, 420) ~ "LineHand",
         negear >= 220 & negear <= 230                              ~ "LineHand",
 
