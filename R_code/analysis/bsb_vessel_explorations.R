@@ -19,8 +19,6 @@
 if (!exists("in_string")) {
   stop("'in_string' not defined. Run via 00_exploratory_analysis_wrapper.R or set in_string manually.")
 }
-img_dir <- here("images", "exploratory","Rported")
-if (!dir.exists(img_dir)) dir.create(img_dir, recursive = TRUE)
 
 
 # Placeholder hullids to exclude (Stata: multiple drop if inlist(hullid, ...))

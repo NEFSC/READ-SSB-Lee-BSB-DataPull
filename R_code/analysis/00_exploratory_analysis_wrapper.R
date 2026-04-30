@@ -25,12 +25,17 @@ in_string <- "2026-04-30"
 library("glue")
 library("tidyverse")
 library("here")
-library("conflicted")
+library("lubridate")
 library("pals")
+library("conflicted")
 
 conflicts_prefer(dplyr::filter)
 conflicts_prefer(dplyr::summarise)
+conflicts_prefer(lubridate::year)
+conflicts_prefer(lubridate::quarter)
 
+img_dir <- here("images", "exploratory","Rported")
+if (!dir.exists(img_dir)) dir.create(img_dir, recursive = TRUE)
 
 
 source(here("R_code", "analysis", "bsb_cams_match_coverage.R"))

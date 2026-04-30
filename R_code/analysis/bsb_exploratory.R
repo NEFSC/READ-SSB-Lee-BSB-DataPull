@@ -42,26 +42,13 @@
 # Date:
 # =============================================================================
 
-library("glue")
-library("tidyverse")
-library("lubridate")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-conflicts_prefer(lubridate::year)
-conflicts_prefer(lubridate::quarter)
 
-here::i_am("R_code/analysis/bsb_exploratory.R")
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
 source(here("R_code", "analysis", "helpers", "gear_market_helpers.R"))
 
 if (!exists("in_string")) {
   stop("'in_string' not defined. Run via 00_exploratory_analysis_wrapper.R or set in_string manually.")
 }
 
-img_dir <- file.path(my_images, "exploratory")
-if (!dir.exists(img_dir)) dir.create(img_dir, recursive = TRUE)
 
 exclude_states <- c("CN", "FL", "ME", "NH", "PA", "SC")
 
@@ -71,13 +58,13 @@ exclude_states <- c("CN", "FL", "ME", "NH", "PA", "SC")
 # =============================================================================
 
 landings_raw <- readRDS(
-  file.path(data_main, "commercial", glue("landings_all_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("landings_all_{in_string}.Rds"))
 )
 cams_gears <- readRDS(
-  file.path(data_main, "commercial", glue("cams_gears_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("cams_gears_{in_string}.Rds"))
 )
 deflators_q <- readRDS(
-  file.path(data_external, glue("deflatorsQ_{in_string}.Rds"))
+  here("data_folder", "external", glue("deflatorsQ_{in_string}.Rds"))
 )
 
 landings <- landings_raw %>%

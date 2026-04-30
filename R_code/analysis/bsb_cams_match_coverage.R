@@ -21,8 +21,6 @@ if (!exists("in_string")) {
   stop("'in_string' not defined. Run via 00_exploratory_analysis_wrapper.R or set in_string manually.")
 }
 
-img_dir <- here("images", "exploratory","Rported")
-if (!dir.exists(img_dir)) dir.create(img_dir, recursive = TRUE)
 
 atlantic_states <- c("CT", "DE", "MA", "MD", "NC", "NJ", "NY", "RI", "VA")
 
