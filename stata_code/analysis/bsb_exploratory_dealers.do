@@ -134,7 +134,7 @@ order unclassified_frac
 bysort year: egen t6=total(lndlb6)
 bysort year: egen tt=total(total)
 gen yearly_unc=t6/tt
-order yearly_un
+order yearly_unc
 gsort year -unclassified_frac
 browse if unclassified_frac>yearly_unc & year>=2010
 sort dlrid year
