@@ -10,19 +10,8 @@
 # Notes:   Ported from stata_code/analysis/bsb_seasonal.do
 #          in_string must be set before sourcing (via wrapper or manually).
 #          States excluded per Stata: CN, FL, ME, NH, NK, PA, SC.
-# Author:
-# Date:
 # =============================================================================
 
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/analysis/bsb_seasonal.R")
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
 
 if (!exists("in_string")) {
   stop("'in_string' not defined. Run via 00_exploratory_analysis_wrapper.R or set in_string manually.")
@@ -34,7 +23,7 @@ if (!exists("in_string")) {
 # =============================================================================
 
 weekly <- readRDS(
-  file.path(data_main, "commercial", glue("weekly_landings_{in_string}.Rds"))
+  here("data_folder", "main", "commercial",  glue("weekly_landings_{in_string}.Rds"))
 )
 
 # States to exclude (Stata: drop if inlist(state, "CN","FL","ME","NH","NK","PA","SC"))

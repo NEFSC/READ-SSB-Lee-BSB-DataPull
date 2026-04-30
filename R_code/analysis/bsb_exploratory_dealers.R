@@ -14,19 +14,8 @@
 #            PW (Pee Wee) stays as ES (Extra Small), not merged into SQ (Small).
 #          Stata's browse commands translated to print(head(...)) and
 #          print(arrange(...)) for console inspection.
-# Author:
-# Date:
 # =============================================================================
 
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
-
-here::i_am("R_code/analysis/bsb_exploratory_dealers.R")
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
 source(here("R_code", "analysis", "helpers", "gear_market_helpers.R"))
 
 if (!exists("in_string")) {
@@ -39,13 +28,13 @@ if (!exists("in_string")) {
 # =============================================================================
 
 landings_raw <- readRDS(
-  file.path(data_main, "commercial", glue("landings_all_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("landings_all_{in_string}.Rds"))
 )
 cams_gears <- readRDS(
-  file.path(data_main, "commercial", glue("cams_gears_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("cams_gears_{in_string}.Rds"))
 )
 dealers_annual <- readRDS(
-  file.path(data_main, "commercial", glue("dealers_annual_{in_string}.Rds"))
+  here("data_folder", "main", "commercial", glue("dealers_annual_{in_string}.Rds"))
 )
 
 landings <- landings_raw %>%
@@ -150,9 +139,7 @@ print(
 # (Second use of landings_all in the Stata script)
 # =============================================================================
 
-landings2 <- readRDS(
-  file.path(data_main, "commercial", glue("landings_all_{in_string}.Rds"))
-) %>%
+landings2 <- landings_raw %>%
   filter(merge_species_codes != 1) %>%
   mutate(
     dlr_date = as.Date(dlr_date),
