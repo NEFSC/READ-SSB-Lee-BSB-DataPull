@@ -64,9 +64,15 @@ dealer_mkt <- landings %>%
   group_by(dlrid, year, mym) %>%
   summarise(lndlb = sum(lndlb, na.rm = TRUE), .groups = "drop")
 
+dealer_mkt<-dealer_mkt %>%
+  mutate(dlrid=as.numeric(dlrid))
+
 # Stata: rename dlrid dnum; merge; rename dnum dlrid
 dealer_mkt <- dealer_mkt %>%
   left_join(dealers_annual %>% rename(dlrid = dnum), by = c("dlrid", "year"))
+
+# dealers_annual has some 'gaps' in it, sometimes a dealer has a permit in year 1 and 3, but not year 3. 
+# this causes the dealer's demographics to be missing, including dlr_name 
 
 # Pivot wide: one lndlb column per market category (reshape wide lndlb, j(mym))
 dealer_wide <- dealer_mkt %>%
