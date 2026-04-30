@@ -9,8 +9,6 @@
 # Notes:   Ported from stata_code/analysis/00_exploratory_analysis_wrapper.do
 #          prices_by_category.R is not included — blocked pending identification
 #          of daily_landings_category source script (see CLAUDE_analysis_port_summary.md).
-# Author:
-# Date:
 # =============================================================================
 
 library("here")
@@ -18,12 +16,22 @@ here::i_am("R_code/analysis/00_exploratory_analysis_wrapper.R")
 
 # =============================================================================
 # *** UPDATE THIS DATE to match your extraction vintage before running ***
-# Format: YYYY-MM-DD (e.g., "2025-07-09")
+# Format: YYYY-MM-DD (e.g., "2026-04-30")
 # This must match the date suffix on your extraction output .Rds files.
 # NOTE: R extraction scripts use format(Sys.Date()) which gives "YYYY-MM-DD"
 # (hyphens), distinct from Stata's "YYYY_MM_DD" (underscores).
 # =============================================================================
-in_string <- "2025-07-09"
+in_string <- "2026-04-30"
+library("glue")
+library("tidyverse")
+library("here")
+library("conflicted")
+library("pals")
+
+conflicts_prefer(dplyr::filter)
+conflicts_prefer(dplyr::summarise)
+
+
 
 source(here("R_code", "analysis", "bsb_cams_match_coverage.R"))
 source(here("R_code", "analysis", "bsb_vessel_explorations.R"))
