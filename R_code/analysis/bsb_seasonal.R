@@ -26,6 +26,9 @@ weekly <- readRDS(
   here("data_folder", "main", "commercial",  glue("weekly_landings_{in_string}.Rds"))
 )
 
+weekly<-weekly%>%
+  filter(!is.na(week))
+
 # States to exclude (Stata: drop if inlist(state, "CN","FL","ME","NH","NK","PA","SC"))
 exclude_states <- c("CN", "FL", "ME", "NH", "NK", "PA", "SC")
 
