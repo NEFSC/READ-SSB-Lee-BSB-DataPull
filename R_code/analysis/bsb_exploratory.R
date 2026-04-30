@@ -123,7 +123,7 @@ landings <- landings %>%
 landings_txn <- landings %>%
   group_by(camsid, hullid, mygear, record_sail, record_land,
            dlr_date, dlrid, state, grade_desc, market_desc, dateq,
-           year, month, area, status, questionable_status) %>%
+           year, month, area, status, questionable_status,mygrade_short) %>%
   summarise(
     value  = sum(value,  na.rm = TRUE),
     lndlb  = sum(lndlb,  na.rm = TRUE),
@@ -136,7 +136,7 @@ landings_txn <- landings %>%
   )
 
 # Merge quarterly deflator
-# NOTE: unmatched rows (no CPI yet) are current-year months >= May; drop them.
+# NOTE: unmatched rows (no CPI yet) are current-year months. Don't worry too much about them.
 deflators_join <- deflators_q %>%
   select(dateq = quarter, fCPIAUCSL_2023Q1)
 
@@ -147,7 +147,7 @@ unmatched <- is.na(landings_txn$fCPIAUCSL_2023Q1)
 if (any(unmatched)) {
   stopifnot(all(
     landings_txn$year[unmatched]  == max(landings_txn$year) &
-    landings_txn$month[unmatched] >= 5
+    landings_txn$month[unmatched] >= 3
   ))
   landings_txn <- landings_txn %>% filter(!unmatched)
 }
