@@ -10,19 +10,12 @@
 #          commercial/maryland_BSB.do
 #          Maryland has a 50 lb open-access possession limit for BSB and up
 #          to 14 landings permits.  Trips under the threshold are excluded.
+#          Permit comes out as a character
+#          Designed to be run from the 01_extraction_wrapper
 # =============================================================================
 
-library("ROracle")
-library("glue")
-library("tidyverse")
-library("here")
-library("conflicted")
-conflicts_prefer(dplyr::filter)
-conflicts_prefer(dplyr::summarise)
 
-here::i_am("R_code/data_extraction_processing/extraction/commercial/maryland_BSB.R")
 
-source(here("R_code", "project_logistics", "R_paths_libraries.R"))
 
 vintage_string <- format(Sys.Date())
 
