@@ -133,7 +133,7 @@ rename vp_num permit;
 
 /* This bit joins them */
 
-merge 1:1 permit fishing_year using ${data_raw}/commercial/permit_working_$today_date_string;
+merge 1:1 permit fishing_year using ${data_main}/commercial/permit_working_$today_date_string;
 save ${data_main}/commercial/permit_portfolio_$today_date_string,  replace;
 
 

@@ -13,8 +13,8 @@
 /* state patterns of landings */
 
 use  "${data_main}\commercial\weekly_landings_${in_string}.dta", replace
-
-graph box landings, over(week)
+decode mys, gen(state)
+graph box landings, over(weekly_date)
 
 
 xtline landings
@@ -43,5 +43,5 @@ These are two good examples. MA (North) and NJ (South) look similar.
 
 
 */ 
-graph box landings if state=="MD" , over(week,label(angle(45)))
-graph box landings if state=="RI" , over(week,label(angle(45)))
+graph box landings if state=="MD" , over(weekly_date,label(angle(45)))
+graph box landings if state=="RI" , over(weekly_date,label(angle(45)))

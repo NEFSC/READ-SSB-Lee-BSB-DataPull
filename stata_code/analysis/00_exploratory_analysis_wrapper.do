@@ -6,7 +6,7 @@
 *     vintage string (format: YYYY_MM_DD, set by folder_setup_globals.do). ***
 * See README.md ## Execution Guide for full prerequisites and run order.
 ********************************************************************************
-global in_string 2025_07_09
+global in_string 2026_04_30
 
 
 do "$analysis_code/bsb_cams_match_coverage.do"

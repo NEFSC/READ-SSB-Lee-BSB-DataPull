@@ -11,7 +11,7 @@ This is a a bit of quality assurance. landings come into the dealer databases fr
 clear;
 
 local sql "select state, nespp4, dersource, year, sum(spplndlb) as landings, sum(sppvalue) as value from nefsc_garfo.cfders_all_years
-    where nespp3=335 and year>=2000
+    where nespp3='335' and year>=2000
 	group by state, nespp4, dersource, year" ;
 	
 clear;	

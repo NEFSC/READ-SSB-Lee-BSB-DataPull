@@ -5,15 +5,19 @@ This repository holds data extraction, processing, and exploration code for Min-
 It includes a datapull from CAMS and other sources, data exploration, and 
 moderate amounts of data processing that is (hopefully) general to all projects. 
 
-Code to extract data from NEFSC Oracle databases will need to be run by a user with access.  This code can be found in 
+Code to extract, minimally process, and minimally analyze data from NEFSC Oracle databases will need to be run by a user with access.  This code can be found in 
 ```
 ├── READ-SSB-Lee-BSB-DataPull/  
 │   ├── R_code/            
 │ 	  ├── data_extraction_processing
 │ 	  	├── extraction
+│ 	  	├── processing
+│ 	  ├── analysis
 │   ├── stata_code/            
 │ 	  ├── data_extraction_processing
 │ 	  	├── extraction
+│ 	  	├── processing
+│ 	  ├── analysis
 ```
 
 All results of the data extraction code will be put into
@@ -100,7 +104,18 @@ Rstudio users using projects don't have to do this step.
 
 ## Execution Guide
 
-### Prerequisites
+On April 30, I ported the "01_extraction_wrapper.do" file from R to stata. I will not maintain the stata code going forward. 
+I expect to port the "00_cams_extraction.do" file, however it is basically a sql query.
+
+### R Prerequisites
+
+R with packages installed (see the data_extraction_processing/extraction/commercial/01_extraction_wrapper.R for packages)
+Oracle account. Connection details in object
+nefscdb_con<-dbconnect(drv, username=yourusername, password=your password, dbname=the dbname)
+FRED API key
+
+
+### Stata Prerequisites
 
 Before running any code, ensure the following are in place:
 
@@ -116,7 +131,7 @@ Before running any code, ensure the following are in place:
 - **Custom ado file** `vintage_lookup_and_reset.ado` — already included in
   `stata_code/ado/`; loaded automatically by `folder_setup_globals.do`
 
-### Execution Sequence
+### Stata Execution Sequence
 
 ```
 STEP 0 — Setup (required before anything else)
@@ -228,10 +243,10 @@ state-permitted from federally-permitted vessels.
 | Permit Value | Type | Notes |
 |-------------|------|-------|
 | 000000 | State (no federal permit) | CAMSID constructed from permit+hullid+dealer fields; excluded from apportionment |
-| 190998 | Vessel size class A| Dropped from vessel-level analysis |
-| 290998 | Vessel size class B| Dropped from vessel-level analysis |
-| 390998 | vessel size class C| Dropped from vessel-level analysis |
-| 490998 | vessel size class D| Dropped from vessel-level analysis |
+| 190998 | Unknown vessel, Undertonnage | Dropped from vessel-level analysis |
+| 290998 | Unknown vessel, small ton class | Dropped from vessel-level analysis |
+| 390998 | Unknown vessel, medium ton class | Dropped from vessel-level analysis |
+| 490998 | Unknown vessel, large ton class | Dropped from vessel-level analysis |
 | All others | Federal | 6-digit federal permit number |
 
 >The 998 permits correspond to vessels with an unknown/no permit, but in a particular size bin.

@@ -58,7 +58,7 @@ order negear negear_name mesh_match secgear_mapped fmcode
 bysort negear: gen t=_n==1
 browse if t==1
 */
-gen str mygear="LineHand" if  inlist(negear,10, 20,21,30, 34,40, 420,60,62,65,66) 
+gen str mygear="LineHand" if  inlist(negear,10, 20,21,22, 30, 34,40, 420,60,62,65,66) 
 replace mygear="LineHand" if negear>=220 & negear<=230
 replace mygear="LineHand" if inlist(negear,250, 251, 330, 340, 380,414,90,410) 
 
@@ -167,7 +167,7 @@ gen price=value/lndlb
 
 /* merge deflators _merge=1 has been the current month */ 
 merge m:1 dateq using "$data_external/deflatorsQ_${in_string}.dta", keep(1 3)
-assert year==2025 & month>=5 if _merge==1
+assert year==2026 & month>=3 if _merge==1
 drop if _merge==1
 drop _merge
 
@@ -318,7 +318,7 @@ preserve
 collapse (sum) lndlb livlb, by(market_desc)
 browse
 egen t=total(lndlb)
-gen frac=lnd/t
+gen frac=lndlb/t
 gsort - frac
 list market_desc frac
 restore
@@ -358,7 +358,7 @@ gen large_trip =tl>=.050
 collapse (sum)lndlb, by(large_trip)
 egen t=total(lndlb)
 gen frac=lndlb/t
-list large lndlb frac
+list large_trip lndlb frac
 /* However well over 95% of total landings are on "large" trips */
 
 restore
@@ -517,7 +517,7 @@ drop if inlist(state_string, "CN","FL","ME", "NH","PA","SC")
 bysort year: egen tyl=total(lndlb)
 gen fracy=lndlb/tyl
 
-bysort year state: egen tyls=total(lndlb)
+bysort year state_string: egen tyls=total(lndlb)
 gen frac=lndlb/tyls
 
 
@@ -588,14 +588,14 @@ restore
 
 
 /* time series of prices by state */
-collapse (sum) lndlb value valueR, by(state_string state market_desc year)
+collapse (sum) lndlb value valueR_CPI, by(state_string state market_desc year)
 drop if inlist(state_string, "CN","FL","ME", "NH","PA","SC")
 
 bysort state_string: egen tl=total(lndlb)
 gen frac=lndlb/tl
 gen price=value/(lndlb*1000)
 
-gen priceR_CPI=valueR/(lndlb*1000)
+gen priceR_CPI=valueR_CPI/(lndlb*1000)
 
 
 levelsof state_string, local(state_names)
@@ -620,12 +620,12 @@ foreach l of local state_names{
 
 
 
-collapse (sum) lndlb value valueR, by(state market_desc year)
+collapse (sum) lndlb value valueR_CPI, by(state market_desc year)
 
 
 
 gen price=value/(lndlb*1000)
-gen priceR_CPI=valueR/(lndlb*1000)
+gen priceR_CPI=valueR_CPI/(lndlb*1000)
 
 levelsof market_desc, local(sizes)
 
