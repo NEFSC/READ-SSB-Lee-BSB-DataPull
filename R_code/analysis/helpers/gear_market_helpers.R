@@ -5,7 +5,9 @@
 #          (2) apply_market_rebinning()       — standard market category rebinning
 #          (3) apply_market_rebinning_dealers() — dealers-analysis variant
 #          (4) apply_grade_cleaning()          — standardizes grade_desc values
-# Notes:   Gear mapping and market rebinning logic appears in multiple Stata
+# Notes:   IMPORTANT -- this rebinning makes sense for black sea bass, but may not 
+#          be optimal for another fishery. Use with care
+#          Gear mapping and market rebinning logic appears in multiple Stata
 #          scripts (bsb_exploratory.do, bsb_exploratory_dealers.do,
 #          prices_by_category.do).  Extracted here to avoid triplication.
 #          If gear or market rules change, update this file only.
@@ -56,9 +58,9 @@ apply_gear_categories <- function(df) {
         negear %in% c(500, 520)       ~ "Gillnet",
 
         # PotTrap (pots, traps, weirs, pounds)
-        negear >= 180 & negear <= 212 ~ "PotTrap",
+        negear >= 180 & negear <= 217 ~ "PotTrap",
         negear >= 300 & negear <= 301 ~ "PotTrap",
-        negear %in% c(80, 140, 142, 240, 260, 270, 320, 322) ~ "PotTrap",
+        negear %in% c(80, 140, 141, 142, 143, 240, 260, 270, 320, 321, 322, 323) ~ "PotTrap",
 
         # Dredge + Unknown → Misc
         negear >= 381 & negear <= 383 ~ "Misc",
