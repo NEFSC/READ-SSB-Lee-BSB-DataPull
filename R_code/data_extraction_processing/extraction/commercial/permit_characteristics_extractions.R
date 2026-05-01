@@ -18,9 +18,6 @@
 #          back from data_raw — a path bug.  R port uses data_main throughout.
 # =============================================================================
 
-# Update last_yr each year to extend the extraction range.
-last_yr      <- 2025
-fishing_years <- 1996:last_yr
 
 output_dir <- here("data_folder", "main", "commercial")
 if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
@@ -34,7 +31,7 @@ fishery_query <- glue(
   "select vp.ap_year, vp.ap_num, vp.vp_num, vp.plan, vp.cat,
           vp.start_date, vp.end_date, vp.date_expired, vp.date_canceled
    from nefsc_garfo.permit_vps_fishery_ner vp
-   where ap_year between 1996 and {last_yr}
+   where ap_year between 1996 and {permit_extract_last_yr}
    order by vp_num, ap_num"
 )
 
@@ -91,7 +88,7 @@ message(glue("Saved: vps_fishery_raw_{vintage_string}.Rds"))
 # (e.g., data.table or dplyr::filter on pre-computed date columns) is faster.
 
 fishery_active <- fishery_raw %>%
-  crossing(fishing_year = fishing_years) %>%
+  crossing(fishing_year = permit_extract_fishing_fishing_years) %>%
   filter(
     start_date < as.Date(paste0(fishing_year + 1, "-05-01")),
     is.na(myde) | myde >= as.Date(paste0(fishing_year,     "-05-01"))
@@ -142,12 +139,10 @@ message(glue("Saved: permit_working_{vintage_string}.Rds"))
 # =============================================================================
 
 vessel_query <- glue(
-  "select vp.vp_num, vp.ap_num, vp.ap_year, vp.hull_id,
-          vp.doc_num, vp.length, vp.grt, vp.net_tons, vp.engine_power,
-          vp.crew_size, vp.date_app, vp.date_coded, vp.hullid_entry_date,
-          vp.hullid_update_date, vp.ves_type, vp.ves_name
+  "select ap_year, ap_num, vp_num, hull_id, ves_name, strt1, strt2, city, st, zip1, zip2, tel, hport, hpst, pport, ppst, len, crew, gtons, 
+ntons, vhp, blt, hold, toc,top, date_issued, date_canceled, max_trap_limit
    from nefsc_garfo.permit_vps_vessel vp
-   where ap_year between 1996 and {last_yr}
+   where ap_year between 1996 and {permit_extract_last_yr}
    order by vp_num, ap_num"
 )
 nova_conn <- eval(nefscdb_con)
@@ -157,22 +152,19 @@ dbDisconnect(nova_conn)
 vessel_raw <- vessel_raw %>%
   rename_with(tolower) %>%
   # Oracle DATE columns arrive as POSIXct; convert to Date.
-  # Stata: gen myhull_entry = dofc(hullid_entry_date)
   mutate(
-    myhull_entry  = as.Date(hullid_entry_date),
-    myhull_update = as.Date(hullid_update_date)
+    mydate_issued = as.Date(date_issued),
+    mydate_canceled = as.Date(date_canceled)
   ) %>%
-  select(-hullid_entry_date, -hullid_update_date)
+  select(-date_issued, -date_canceled)
 
 
 # =============================================================================
 # Chunk 5: Deduplicate vessel records — one row per vp_num × ap_year
 # =============================================================================
 
-# Stata: bysort vp_num ap_year (ap_num): keep if _n == _N
 # Keeps the record with the highest ap_num within each vp_num × ap_year group
-# (most recent permit application for that vessel × year).
-# slice_max(ap_num, n = 1, with_ties = FALSE) is the R equivalent.
+# slice_max(ap_num, n = 1, with_ties = FALSE) is the R equivalent of stata's 
 
 vessel_panel <- vessel_raw %>%
   group_by(vp_num, ap_year) %>%
@@ -207,7 +199,7 @@ message(glue("Saved: permit_portfolio_{vintage_string}.Rds"))
 # the exact column name against the Oracle schema before running in production.
 
 lobster_traps <- permit_portfolio %>%
-  select(hull_id, fishing_year, max_trap) %>%
+  select(hull_id, fishing_year, max_trap_limit) %>%
   distinct()
 
 saveRDS(lobster_traps,
