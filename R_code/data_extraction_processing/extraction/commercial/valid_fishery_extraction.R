@@ -10,10 +10,6 @@
 # =============================================================================
 
 
-# Update last_yr each year to extend the extraction range.
-# Stata equivalent: global lastyr 2025
-last_yr <- 2025
-
 fishery_query <- glue(
   "select fishery_id, plan, cat,
           permit_year      as ap_year,
@@ -24,7 +20,7 @@ fishery_query <- glue(
           per_yr_end_date,
           fishery_type
    from nefsc_garfo.permit_valid_fishery vf
-   where permit_year between 1996 and {last_yr}
+   where permit_year between 1996 and {permit_extract_last_yr}
    order by plan, cat, permit_year"
 )
 

@@ -82,9 +82,10 @@ cpi_quarterly <- cpi_qtr_raw %>%
     base_val           = cpiaucsl[date == base_qtr_date],
     fCPIAUCSL_2023Q1   = cpiaucsl / base_val,
     # Retain a readable quarter label alongside the date
-    quarter            = paste0(year(date), "Q", quarter(date))
+    quarter            = paste0(year(date), "Q", quarter(date)),
+    dateq              =lubridate::quarter(date, with_year=TRUE)
   ) %>%
-  select(date, quarter, cpiaucsl, fCPIAUCSL_2023Q1) %>%
+  select(date, dateq,quarter, cpiaucsl, fCPIAUCSL_2023Q1) %>%
   arrange(date)
 
 # fCPIAUCSL_2023Q1: divide nominal price by this to get real 2023Q1 dollars.

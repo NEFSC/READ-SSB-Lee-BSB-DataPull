@@ -29,6 +29,11 @@ here::i_am("R_code/data_extraction_processing/extraction/commercial/01_extractio
 
 vintage_string <- format(Sys.Date())
 
+# last_yr for permit extractions
+permit_extract_last_yr      <- 2025
+permit_extract_fishing_fishing_years <- 1996:permit_extract_last_yr
+
+
 # ============================================================
 # EXECUTION CONTROL
 # ============================================================
