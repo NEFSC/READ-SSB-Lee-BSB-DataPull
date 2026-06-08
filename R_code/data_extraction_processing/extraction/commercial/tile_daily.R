@@ -1,4 +1,4 @@
-# =============================================================================
+################################################################################ 
 # Script:  tile_daily.R
 # Purpose: Pull daily commercial landings for tilefish,
 #          aggregated by trip date, state, and species.
@@ -11,7 +11,7 @@
 #  itis_tsn == "168546" ~ "TILEFISH, (GOLDEN TILEFISH)",
 #  itis_tsn == "168537" ~ "TILEFISH, UNC",
 #  itis_tsn == "168544" ~ "TILEFISH, GOLDFACE",
-# =============================================================================
+################################################################################ 
 daily_query <- glue(
   "select TO_CHAR(trunc(date_trip), 'MM-DD-YYYY') as date_trip_str,
           itis_tsn,

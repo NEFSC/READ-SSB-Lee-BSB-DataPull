@@ -1,4 +1,4 @@
-# =============================================================================
+################################################################################ 
 # Script:  hake_daily.R
 # Purpose: Pull daily commercial landings for silver hake,
 #          aggregated by trip date, state, and species.
@@ -10,7 +10,7 @@
 # 164790	MERLUCCIUS		BLACK WHITING/SILVER HAKE MIX		507	SILVER&OFFSHHAKE MIX
 # 164791	MERLUCCIUS BILINEARIS	HAKE,SILVER (WHITING)			509	HAKE,SILVER
 # 164793	MERLUCCIUS ALBIDUS	HAKE,OFFSHORE UNC (WHITING,BLACK)	508	HAKE,OFFSHORE
-=========================
+################################################################################ 
 daily_query <- glue(
   "select TO_CHAR(trunc(date_trip), 'MM-DD-YYYY') as date_trip_str,
           itis_tsn,
@@ -47,7 +47,6 @@ daily <- daily %>%
       itis_tsn == "164790" ~ "BLACK WHITING/SILVER HAKE MIX",
       itis_tsn == "164791" ~ "HAKE,SILVER (WHITING)",
       itis_tsn == "164793" ~ "HAKE,OFFSHORE UNC (WHITING,BLACK)",
-      
       TRUE                 ~ NA_character_
     ),
     # price = value / lndlb (landed-weight pounds)

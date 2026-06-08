@@ -1,4 +1,4 @@
-# =============================================================================
+################################################################################ 
 # Script:  hake_price_categories.R
 # Purpose: Pull the hake species/grade/market keyfile (hake_sizes) and daily
 #          commercial hake landings aggregated by date, itis, market category, and grade.
@@ -11,12 +11,12 @@
 #            Daily hake landings by market category and grade, merged with keyfile.
 # Notes:   Adapted from /data_extraction_processing/extraction/
 #          commercial/bsb_price_categories.R
-# =============================================================================
+# ################################################################################
 
 
-# =============================================================================
+# ################################################################################
 # Section 1: Oracle queries
-# =============================================================================
+# ################################################################################
 
 # Query 1: Pull species/grade/market keyfile for hake from the NEFSC lookup table.
 # cf_lndlb_livlb = conversion factor from landed weight to live weight;
@@ -60,9 +60,9 @@ daily_landings <- dbGetQuery(nova_conn, landings_query)
 dbDisconnect(nova_conn)
 
 
-# =============================================================================
+# ################################################################################
 # Section 2: Process and save hake_sizes keyfile
-# =============================================================================
+# ################################################################################
 
 hake_sizes <- hake_sizes %>%
   rename_with(tolower) %>%
@@ -81,9 +81,9 @@ saveRDS(hake_sizes, file = sizes_path)
 message(glue("Saved: {sizes_path}"))
 
 
-# =============================================================================
+# ################################################################################
 # Section 3: Process daily landings
-# =============================================================================
+# ################################################################################
 
 daily_landings <- daily_landings %>%
   rename_with(tolower) %>%
@@ -110,9 +110,9 @@ daily_landings <- daily_landings %>%
   mutate(price = if_else(landings > 0, value / landings, NA_real_))
 
 
-# =============================================================================
+# ################################################################################
 # Section 4: Merge daily landings with hake_sizes keyfile
-# =============================================================================
+# ################################################################################
 
 nrow_pre <- nrow(daily_landings)
 
@@ -132,9 +132,9 @@ stopifnot(
 )
 
 
-# =============================================================================
+# ################################################################################
 # Section 5: Save daily landings output
-# =============================================================================
+# ################################################################################
 
 landings_path <- here("data_folder", "main", "commercial",
                       glue("daily_hake_landings_category_{vintage_string}.Rds"))

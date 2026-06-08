@@ -1,4 +1,4 @@
-# =============================================================================
+# ################################################################################
 # Script:  hake_transactions.R
 # Purpose: Extract transaction-level commercial Silver hake landings from
 #          CAMS/GARFO Oracle databases, compute price per live-weight pound,
@@ -9,11 +9,11 @@
 # Outputs: data_folder/main/commercial/hake_landings_all_{vintage_string}.Rds
 #          Transaction-level silver hake commercial landings with prices and
 #          market-category metadata. One row per dealer report record.
-# =============================================================================
+# ################################################################################
 
-# =============================================================================
+# ################################################################################
 # Section 1: Oracle connection and data pull
-# =============================================================================
+# ################################################################################
 
 # SQL joins dealer records (cams_land) to subtrip records (cams_subtrip) via
 # a LEFT JOIN on camsid + subtrip number.  All dealer records are retained;
@@ -57,9 +57,9 @@ landings_all <- dbGetQuery(nova_conn, sql_query)
 dbDisconnect(nova_conn)
 
 
-# =============================================================================
+# ################################################################################
 # Section 2: Type cleanup and naming conventions
-# =============================================================================
+# ################################################################################
 
 # Lower-case all column names (ROracle returns Oracle identifiers in upper case).
 landings_all <- landings_all %>%
@@ -85,9 +85,9 @@ landings_all <- landings_all %>%
   )
 
 
-# =============================================================================
+# ################################################################################
 # Section 3: Construct price variable
-# =============================================================================
+# ################################################################################
 
 # price = value / livlb  (dollars per live-weight pound)
 #
@@ -106,9 +106,9 @@ landings_all <- landings_all %>%
   mutate(price = if_else(livlb > 0, value / livlb, NA_real_))
 
 
-# =============================================================================
+# ################################################################################
 # Section 4: Merge in species/market-category keyfile (hake_sizes)
-# =============================================================================
+# ################################################################################
 
 # hake_sizes is the species-grade-market lookup table produced by
 # hake_price_categories.R.
@@ -155,9 +155,9 @@ stopifnot(
 )
 
 
-# =============================================================================
+# ################################################################################
 # Section 5: Save output
-# =============================================================================
+# ################################################################################
 
 output_dir  <- here("data_folder", "main", "commercial")
 output_file <- glue("hake_landings_all_{vintage_string}.Rds")
