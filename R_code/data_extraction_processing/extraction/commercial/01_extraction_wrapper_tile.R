@@ -40,6 +40,7 @@ permit_extract_last_yr      <- 2025
 permit_extract_fishing_fishing_years <- 1996:permit_extract_last_yr
 
 tilefish_itis_codes<- c("168543","168546","168537","168544")
+tilefish_itis_codes<- c("168546")
 
 
 codes_sql <- glue_collapse(glue("'{tilefish_itis_codes}'"), sep = ", ")
