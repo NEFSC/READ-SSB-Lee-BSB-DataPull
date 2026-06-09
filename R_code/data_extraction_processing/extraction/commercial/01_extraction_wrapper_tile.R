@@ -50,10 +50,10 @@ codes_sql <- glue_collapse(glue("'{tilefish_itis_codes}'"), sep = ", ")
 # ============================================================
 
 run_cams_gears    <- TRUE   # Module 3 : pulls cfg_gear
-run_tile_daily <- TRUE   # Module 6:   Pull daily commercial tilefish at the trip-state-species level
-run_tile_price_categories<- TRUE  # Module 7:   keyfile and daily landings
+run_daily <- TRUE   # Module 6:   Pull daily commercial tilefish at the trip-state-species level
+run_price_categories<- TRUE  # Module 7:   keyfile and daily landings
 run_extractFRED      <- TRUE  # Module 10:    dfelators
-run_tile_transactions      <- TRUE   # Module 11: main dataset. most important data pull for the Prices in stock assessment Project
+run_transactions      <- TRUE   # Module 11: main dataset. most important data pull for the Prices in stock assessment Project
 
 
 
@@ -61,10 +61,10 @@ run_tile_transactions      <- TRUE   # Module 11: main dataset. most important d
 modules <- tibble::tribble(
   ~label,                              ~flag,
   "Module 3:       cfg_gear",      run_cams_gears,
-  "Module 6:   Pull daily commercial sfsbsb at the trip-state-species level",run_tile_daily,
-  "Module 7:   keyfile and daily landings",run_tile_price_categories,
+  "Module 6:   Pull daily commercial sfsbsb at the trip-state-species level",run_daily,
+  "Module 7:   keyfile and daily landings",run_price_categories,
   "Module 10:    dfelators",run_extractFRED,
-  "Module 11: main dataset. most important data pull for the Prices in stock assessment Project",run_tile_transactions,
+  "Module 11: main dataset. most important data pull for the Prices in stock assessment Project",run_transactions,
   )
 
       
@@ -85,15 +85,15 @@ for (i in seq_len(nrow(modules))) {
 if(run_cams_gears)   {
   source(here("R_code", "data_extraction_processing","extraction","commercial", "cams_gears.R"))
 }
-if(run_tile_daily) { 
+if(run_daily) { 
   source(here("R_code", "data_extraction_processing","extraction","commercial", "tile_daily.R"))
 }
-if(run_tile_price_categories)  {
+if(run_price_categories)  {
   source(here("R_code", "data_extraction_processing","extraction","commercial", "tile_price_categories.R"))
 }
 if(run_extractFRED)      {
   source(here("R_code", "data_extraction_processing","extraction", "extract_data_from_FRED.R"))
 }
-if(run_tile_transactions) {     
+if(run_transactions) {     
   source(here("R_code", "data_extraction_processing","extraction","commercial", "tile_transactions.R")) # this is the most important data pull for the Prices in stock assessment Project
 }

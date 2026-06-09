@@ -38,7 +38,7 @@ vintage_string <- format(Sys.Date())
 permit_extract_last_yr      <- 2025
 permit_extract_fishing_fishing_years <- 1996:permit_extract_last_yr
 
-hake_itis_codes<- c("164793","164790","164791")
+#hake_itis_codes<- c("164793","164790","164791")
 hake_itis_codes<- c("164791")
 
 
@@ -84,15 +84,15 @@ for (i in seq_len(nrow(modules))) {
 if(run_cams_gears)   {
   source(here("R_code", "data_extraction_processing","extraction","commercial", "cams_gears.R"))
 }
-if(run_tile_daily) { 
+if(run_daily) { 
   source(here("R_code", "data_extraction_processing","extraction","commercial", "hake_daily.R"))
 }
-if(run_tile_price_categories)  {
+if(run_price_categories)  {
   source(here("R_code", "data_extraction_processing","extraction","commercial", "hake_price_categories.R"))
 }
 if(run_extractFRED)      {
   source(here("R_code", "data_extraction_processing","extraction", "extract_data_from_FRED.R"))
 }
-if(run_tile_transactions) {     
+if(run_transactions) {     
   source(here("R_code", "data_extraction_processing","extraction","commercial", "hake_transactions.R")) # this is the most important data pull for the Prices in stock assessment Project
 }
