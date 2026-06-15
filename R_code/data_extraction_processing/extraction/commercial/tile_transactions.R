@@ -21,12 +21,8 @@
 # are attached where a matching subtrip record exists.
 #
 # Filters applied in SQL:
-#  itis_tsn == "168543" ~ "TILEFISH, BLUELINE",
-#  itis_tsn == "168546" ~ "TILEFISH, (GOLDEN TILEFISH)",
-#  itis_tsn == "168537" ~ "TILEFISH, UNC",
-#  itis_tsn == "168544" ~ "TILEFISH, GOLDFACE",
 #   rec = 0              →  commercial trips only (rec = 1 flags recreational)
-#
+#   see wrapper for screener on itis_codes
 # No year-range filter is applied — the full history of tile commercial
 # landings is extracted, consistent with the Stata original.
 
