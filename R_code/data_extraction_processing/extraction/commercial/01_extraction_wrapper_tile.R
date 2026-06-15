@@ -54,6 +54,7 @@ run_daily <- TRUE   # Module 6:   Pull daily commercial tilefish at the trip-sta
 run_price_categories<- TRUE  # Module 7:   keyfile and daily landings
 run_extractFRED      <- TRUE  # Module 10:    dfelators
 run_transactions      <- TRUE   # Module 11: main dataset. most important data pull for the Prices in stock assessment Project
+run_dealers      <- TRUE   # Module 5: pull dealer data
 
 
 
@@ -61,11 +62,13 @@ run_transactions      <- TRUE   # Module 11: main dataset. most important data p
 modules <- tibble::tribble(
   ~label,                              ~flag,
   "Module 3:       cfg_gear",      run_cams_gears,
+  "Module 5:   pull dealer attributes",run_dealers,
   "Module 6:   Pull daily commercial sfsbsb at the trip-state-species level",run_daily,
   "Module 7:   keyfile and daily landings",run_price_categories,
   "Module 10:    dfelators",run_extractFRED,
   "Module 11: main dataset. most important data pull for the Prices in stock assessment Project",run_transactions,
-  )
+
+    )
 
       
 
@@ -96,4 +99,7 @@ if(run_extractFRED)      {
 }
 if(run_transactions) {     
   source(here("R_code", "data_extraction_processing","extraction","commercial", "tile_transactions.R")) # this is the most important data pull for the Prices in stock assessment Project
+}
+if(run_dealers)   {
+  source(here("R_code", "data_extraction_processing","extraction","commercial", "dealers.R"))
 }
