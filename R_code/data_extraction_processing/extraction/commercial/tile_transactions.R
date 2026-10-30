@@ -158,7 +158,7 @@ stopifnot(
 # Section 5: Save output
 # ################################################################################
 
-output_dir  <- here("data_folder", "main", "commercial")
+output_dir  <- here("data_folder", "main", "commercial", "tilefish")
 output_file <- glue("tile_landings_all_{vintage_string}.Rds")
 output_path <- file.path(output_dir, output_file)
 

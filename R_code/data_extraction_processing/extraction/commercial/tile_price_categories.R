@@ -136,7 +136,7 @@ stopifnot(
 # Section 5: Save daily landings output
 ################################################################################ 
 
-landings_path <- here("data_folder", "main", "commercial",
+landings_path <- here("data_folder", "main", "commercial", "tilefish",
                       glue("daily_tile_landings_category_{vintage_string}.Rds"))
 saveRDS(daily_landings, file = landings_path)
 message(glue("Saved: {landings_path}"))
