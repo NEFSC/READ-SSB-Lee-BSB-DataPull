@@ -84,6 +84,13 @@ landings_all <- landings_all %>%
   )
 
 
+# fill dlr_date with record_land if it is missing. This happens for "not sold" records
+landings_all <- landings_all %>%
+  mutate( 
+    dlr_date = if_else(is.na(dlr_date), record_land, dlr_date) 
+  )
+
+
 # ################################################################################
 # Section 3: Construct price variable
 # ################################################################################
@@ -158,7 +165,7 @@ stopifnot(
 # Section 5: Save output
 # ################################################################################
 
-output_dir  <- here("data_folder", "main", "commercial")
+output_dir  <- here("data_folder", "main", "commercial", "tilefish")
 output_file <- glue("tile_landings_all_{vintage_string}.Rds")
 output_path <- file.path(output_dir, output_file)
 

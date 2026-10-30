@@ -59,7 +59,7 @@ daily <- daily %>%
   # Stata: order year date_trip value landings state mys price
   relocate(year, date_trip, value, landings, state, species_name, price)
 
-output_path <- here("data_folder", "main", "commercial",
+output_path <- here("data_folder", "main", "commercial","tilefish",
                     glue("tile_daily_{vintage_string}.Rds"))
 if (!dir.exists(dirname(output_path))) dir.create(dirname(output_path), recursive = TRUE)
 saveRDS(daily, file = output_path)
